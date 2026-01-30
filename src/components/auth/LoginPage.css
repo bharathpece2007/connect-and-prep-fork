@@ -1,0 +1,107 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100vw;
+    background-color: #000;
+    /* Cyber Grid */
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: center;
+}
+
+/* Overlay */
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, transparent 0%, #000 80%);
+}
+
+.login-card {
+    position: relative;
+    z-index: 10;
+    background: #111;
+    border: 2px solid #fff;
+    padding: 3rem;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 12px 12px 0px #fff;
+    text-align: center;
+    border-radius: 0;
+}
+
+.login-header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.login-header p {
+    color: #000;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--accent-action);
+    display: inline-block;
+    padding: 4px 8px;
+    border: 2px solid #fff;
+    font-weight: 600;
+}
+
+.role-toggle {
+    display: flex;
+    background: #000;
+    border: 2px solid #fff;
+    padding: 4px;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+    gap: 4px;
+}
+
+.toggle-btn {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 10px;
+    font-weight: 700;
+    border-radius: 4px;
+    color: #888;
+}
+
+.toggle-btn.active {
+    background: #fff;
+    color: #000;
+}
+
+.form-group label {
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+}
+
+.error-message {
+    margin-top: 1rem;
+    background: var(--error);
+    color: #000;
+    padding: 0.5rem;
+    border: 2px solid #fff;
+    font-weight: 600;
+}
+
+.demo-hint {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 2px dashed #333;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #666;
+}
