@@ -35,7 +35,7 @@
   line-height: 1.5;
   color: var(--text-primary);
   background-color: var(--bg-primary);
-  font-size: 75%;
+  font-size: 100%;
 }
 
 body {

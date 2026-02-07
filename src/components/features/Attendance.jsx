@@ -1,42 +1,125 @@
 import React from 'react';
 import { mockBackend } from '../../services/mockBackend';
 import { CheckCircle, XCircle } from 'lucide-react';
-import './FeatureStyles.css';
+import './Attendance.css';
 
 const Attendance = () => {
     const { attendance } = mockBackend;
 
     return (
-        <div className="feature-container">
-            <h1>Attendance Tracking</h1>
+        <div className="attendance-container">
+            <div className="feature-header">
+                <h1>Attendance List</h1>
+            </div>
 
-            <div className="attendance-stats">
-                <div className="stat-box success">
-                    <h3>Present</h3>
-                    <span className="value">{attendance.present}%</span>
+            {/* Filters */}
+            <div className="filters-section">
+                <div className="filter-group">
+                    <label>Curriculum *</label>
+                    <select className="filter-select">
+                        <option>Select Curriculum</option>
+                        {attendance.curriculums?.map(c => <option key={c}>{c}</option>)}
+                    </select>
                 </div>
-                <div className="stat-box warning">
-                    <h3>Absent</h3>
-                    <span className="value">{100 - attendance.present}%</span>
+                <div className="filter-group">
+                    <label>Term *</label>
+                    <select className="filter-select">
+                        <option>Select Term</option>
+                        {attendance.terms?.map(t => <option key={t}>{t}</option>)}
+                    </select>
                 </div>
-                <div className="stat-box info">
-                    <h3>Total Classes</h3>
-                    <span className="value">{attendance.total}</span>
+                <div className="filter-group">
+                    <label>From Month *</label>
+                    <input type="month" className="filter-input" />
+                </div>
+                <div className="filter-group">
+                    <label>To Month *</label>
+                    <input type="month" className="filter-input" />
                 </div>
             </div>
 
-            <div className="history-section">
-                <h3>Recent History</h3>
-                <div className="history-list">
-                    {attendance.history.map((record, index) => (
-                        <div key={index} className="history-item">
-                            <span className="date">{record.date}</span>
-                            <span className={`status ${record.status.toLowerCase()}`}>
-                                {record.status === 'Present' ? <CheckCircle size={16} /> : <XCircle size={16} />}
-                                {record.status}
-                            </span>
-                        </div>
-                    ))}
+            {/* Course Summary */}
+            <div className="summary-section">
+                <div className="section-title">Course summary list</div>
+                <table className="data-table">
+                    <thead>
+                        <tr>
+                            <th style={{ width: '50%' }}>Course</th>
+                            <th>Present / Total class</th>
+                            <th>Total percentage(%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {attendance.courseSummary?.map((item, index) => (
+                            <tr key={index}>
+                                <td>{item.course}</td>
+                                <td>{item.present} / {item.total}</td>
+                                <td>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <div style={{
+                                            flex: 1,
+                                            height: '6px',
+                                            background: '#333',
+                                            borderRadius: '3px',
+                                            maxWidth: '100px'
+                                        }}>
+                                            <div style={{
+                                                width: `${item.percentage}%`,
+                                                height: '100%',
+                                                background: item.percentage > 75 ? '#4ade80' : '#f87171',
+                                                borderRadius: '3px'
+                                            }} />
+                                        </div>
+                                        {item.percentage}%
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Daywise List */}
+            <div className="daywise-section">
+                <div className="table-controls">
+                    <div className="entries-select">
+                        Show <select style={{ background: '#000', color: '#fff', border: '1px solid #fff' }}><option>10</option></select> entries
+                    </div>
+                    <div className="section-title" style={{ border: 'none', background: 'transparent' }}>Daywise course list</div>
+                    <div className="search-box">
+                        Search: <input type="text" />
+                    </div>
+                </div>
+                <table className="data-table">
+                    <thead>
+                        <tr>
+                            <th style={{ width: '40%' }}>Course</th>
+                            <th>Class Date</th>
+                            <th>Attendance</th>
+                            <th>Document status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {attendance.daywise?.map((item, index) => (
+                            <tr key={index}>
+                                <td>{item.course}</td>
+                                <td>{item.date}</td>
+                                <td>
+                                    <span className={`status-badge ${item.status.toLowerCase()}`}>
+                                        {item.status}
+                                    </span>
+                                </td>
+                                <td className="doc-status">{item.docStatus}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <div className="table-footer" style={{ padding: '1rem', color: '#666', fontSize: '0.8rem', display: 'flex', justifyContent: 'space-between' }}>
+                    <span>Showing 1 to {attendance.daywise?.length} entries</span>
+                    <div className="pagination">
+                        <button style={{ background: '#000', color: '#fff', border: '1px solid #333', padding: '4px 8px', marginRight: '4px' }}>Previous</button>
+                        <button style={{ background: '#000', color: '#fff', border: '1px solid #333', padding: '4px 8px' }}>Next</button>
+                    </div>
                 </div>
             </div>
         </div>
