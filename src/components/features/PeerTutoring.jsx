@@ -19,7 +19,7 @@ const PeerTutoring = () => {
                         <input placeholder="Topic to Teach" className="filter-select" style={{ cursor: 'text' }} />
                         <input type="datetime-local" className="filter-select" style={{ cursor: 'text' }} />
                         <input placeholder="Venue" className="filter-select" style={{ cursor: 'text' }} />
-                        <button className="login-btn" style={{ gridColumn: 'span 2', background: '#4ade80', color: '#000' }}>Confirm Assignment</button>
+                        <button className="login-btn" style={{ gridColumn: 'span 2' }}>Confirm Assignment</button>
                     </form>
                 </div>
             )}
