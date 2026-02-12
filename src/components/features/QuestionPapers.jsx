@@ -59,15 +59,6 @@ const QuestionPapers = () => {
 
     return (
         <div className="feature-container">
-            <div className="feature-header">
-                <h1>Question Papers Database</h1>
-                {user.role === 'teacher' && (
-                    <button className="login-btn" style={{ width: 'auto', padding: '0.5rem 1rem', fontSize: '0.9rem' }} onClick={handleUpload}>
-                        <Upload size={18} style={{ marginRight: '8px' }} /> Upload Paper
-                    </button>
-                )}
-            </div>
-
             {/* Filter Section */}
             <div className="filters-card grid-container" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', marginBottom: '2rem', gap: '1rem' }}>
                 <select value={year} onChange={(e) => setYear(e.target.value)} className="filter-select">
@@ -93,20 +84,20 @@ const QuestionPapers = () => {
                 {filteredPapers.length > 0 ? (
                     filteredPapers.map((paper) => (
                         <div key={paper.id} className="paper-card">
-                            <div className="paper-icon">
-                                <FileText size={40} color="#646cff" />
-                            </div>
-                            <div className="paper-info">
-                                <h3>{paper.subject}</h3>
-                                <p className="meta">{paper.college}</p>
-                                <div style={{ display: 'flex', gap: '8px', fontSize: '0.8rem', color: '#888', marginTop: '4px' }}>
-                                    <span style={{ background: '#333', padding: '2px 6px', borderRadius: '4px' }}>{paper.year}</span>
-                                    <span style={{ background: '#333', padding: '2px 6px', borderRadius: '4px' }}>{paper.type}</span>
+                            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '0.75rem' }}>
+                                <div className="paper-icon">
+                                    <FileText size={48} color="#6366f1" strokeWidth={1.5} />
                                 </div>
+                                <h3 style={{ margin: 0 }}>{paper.subject}</h3>
                             </div>
-                            <div style={{ display: 'flex', gap: '0.5rem', width: '100%' }}>
-                                <button className="download-btn" style={{ flex: 1 }}>
-                                    <Download size={18} /> View
+                            <p className="meta">{paper.college}</p>
+                            <p className="meta-subtitle">{paper.type}</p>
+                            <div className="tags-row">
+                                <span className="tag">{paper.year}</span>
+                            </div>
+                            <div style={{ display: 'flex', gap: '0.5rem', width: '100%', marginTop: 'auto' }}>
+                                <button className="view-btn" style={{ flex: 1 }}>
+                                    <Download size={18} /> VIEW
                                 </button>
                                 {user.role === 'teacher' && (
                                     <button className="icon-btn" style={{ background: '#f8717120', color: '#f87171', borderColor: 'transparent' }} title="Delete">
@@ -117,13 +108,14 @@ const QuestionPapers = () => {
                         </div>
                     ))
                 ) : (
-                    <div style={{ gridColumn: '1/-1', textAlign: 'center', color: '#888', padding: '3rem' }}>
+                    // Displayed when no papers match the current filters
+                    <div className="no-results-message">
                         <FileText size={48} style={{ opacity: 0.2, marginBottom: '1rem' }} />
                         <p>No papers found for these filters.</p>
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 
