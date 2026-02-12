@@ -41,47 +41,39 @@ const LoginPage = () => {
                         <GraduationCap size={64} strokeWidth={1.5} />
                     </div>
                     <h1>CONNECT & PREP</h1>
-                    <div className="portal-badge">
-                        {isStudent ? 'Student Portal' : 'Teacher Portal'}
-                    </div>
                 </div>
 
-                <div className="role-toggle">
-                    <button
-                        className={`toggle-btn ${isStudent ? 'active' : ''}`}
-                        onClick={() => setIsStudent(true)}
-                    >
-                        Student
-                    </button>
-                    <button
-                        className={`toggle-btn ${!isStudent ? 'active' : ''}`}
-                        onClick={() => setIsStudent(false)}
-                    >
-                        Teacher
-                    </button>
-                </div>
+
 
                 <form onSubmit={handleLogin} className="login-form">
                     <div className="form-group">
-                        <label>EMAIL ID / USN</label>
-                        <span className="separator">&gt;</span>
-                        <input
-                            type="email"
-                            placeholder={isStudent ? "student@test.com" : "teacher@test.com"}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
+                        <div>
+                            <label>EMAIL ID / USN</label>
+                            <span className="separator">&raquo;</span>
+                        </div>
+                        <div className="input-wrapper">
+                            <input
+                                type="text"
+                                placeholder={isStudent ? "student@test.com" : "teacher@test.com"}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
                     </div>
 
                     <div className="form-group">
-                        <label>PASSWORD</label>
-                        <span className="separator">&gt;</span>
-                        <input
-                            type="password"
-                            placeholder="••••••••"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                        <div>
+                            <label>PASSWORD</label>
+                            <span className="separator">&raquo;</span>
+                        </div>
+                        <div className="input-wrapper">
+                            <input
+                                type="password"
+                                placeholder="••••••••"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
                     </div>
 
                     {error && <div className="error-message">{error}</div>}
