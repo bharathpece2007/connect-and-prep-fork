@@ -35,7 +35,7 @@ const Results = () => {
                                     fontSize: '0.8rem',
                                     textTransform: 'uppercase',
                                     letterSpacing: '1px',
-                                    color: '#888',
+                                    color: '#000000',
                                     display: 'block',
                                     marginBottom: '4px'
                                 }}>
@@ -47,8 +47,8 @@ const Results = () => {
                         </div>
 
                         <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '1rem' }}>
-                            <span style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#fff' }}>{result.score}</span>
-                            <span style={{ color: '#888' }}>{result.type === 'Semester' ? '' : 'Score'}</span>
+                            <span style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#000000' }}>{result.score}</span>
+                            <span style={{ color: '#333' }}>{result.type === 'Semester' ? '' : 'Score'}</span>
                         </div>
 
                         {result.weakAreas.length > 0 ? (
@@ -58,7 +58,7 @@ const Results = () => {
                                 </div>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                                     {result.weakAreas.map(area => (
-                                        <span key={area} style={{ fontSize: '0.8rem', color: '#ccc' }}>• {area}</span>
+                                        <span key={area} style={{ fontSize: '0.8rem', color: '#555' }}>• {area}</span>
                                     ))}
                                 </div>
                             </div>
@@ -72,11 +72,11 @@ const Results = () => {
             </div>
 
             {/* AI Summary Section */}
-            <div className="card" style={{ marginTop: '2rem', border: '1px solid #646cff' }}>
-                <h3 style={{ color: '#646cff', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ marginTop: '2.5rem', background: 'var(--bg-card)', padding: '2rem', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '4px 4px 0px var(--shadow-hard)' }}>
+                <h3 style={{ color: '#000000', display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <BookOpen /> AI Learning Recommendation
                 </h3>
-                <p style={{ lineHeight: '1.6', color: '#ccc' }}>
+                <p style={{ lineHeight: '1.6', color: '#000000' }}>
                     Based on your recent <strong>Semester 2</strong> results and <strong>Marathon Test</strong> performance,
                     we noticed a struggle in <em>Thermodynamics</em> and <em>CSS Grid</em>.
                     We recommend joining the <strong>"Physics Phenoms"</strong> peer group and booking a doubt
