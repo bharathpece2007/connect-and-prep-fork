@@ -21,6 +21,8 @@ import ChatForum from './components/features/ChatForum'
 import CGPACalculator from './components/features/CGPACalculator'
 import ActivityFeed from './components/features/ActivityFeed'
 import Challenges from './components/features/Challenges'
+import AnonymousChat from './components/features/AnonymousChat'
+import ComplaintBox from './components/features/ComplaintBox'
 import PersonalNotes from './components/features/PersonalNotes'
 
 import './App.css'
@@ -67,6 +69,8 @@ function App() {
                         <Route path="feed" element={<ActivityFeed />} />
                         <Route path="challenges" element={<Challenges />} />
                         <Route path="my-notes" element={<PersonalNotes />} />
+                        <Route path="anonymous-chat" element={<AnonymousChat />} />
+                        <Route path="complaints" element={<ComplaintBox />} />
 
                     </Route>
                 </Routes>
