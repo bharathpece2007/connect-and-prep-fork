@@ -8,7 +8,7 @@ import {
     LogOut, Menu, X, Layout, Library, GraduationCap, Calendar,
     UserCheck, Timer, Bell, Sun, Moon, Target, Trophy, Briefcase,
     Pencil, Clock, Hash, BrainCircuit, Calculator, Activity,
-    Flame, StickyNote, CheckCircle2
+    Flame, StickyNote, CheckCircle2, Shield, Ghost
 } from 'lucide-react';
 import './DashboardLayout.css';
 
@@ -43,6 +43,8 @@ const DashboardLayout = () => {
         { label: 'Library', icon: <Library size={20} />, path: '/dashboard/library' },
         { label: 'Weekly Challenges', icon: <Flame size={20} />, path: '/dashboard/challenges' },
         { label: 'Leaderboard & XP', icon: <Trophy size={20} />, path: '/dashboard/leaderboard' },
+        { label: 'Anonymous Chat', icon: <Ghost size={20} />, path: '/dashboard/anonymous-chat' },
+        { label: 'Complaint Box', icon: <Shield size={20} />, path: '/dashboard/complaints' },
     ];
 
     const currentLabel = navItems.slice().sort((a, b) => b.path.length - a.path.length).find(i => location.pathname.startsWith(i.path))?.label || 'Dashboard';
