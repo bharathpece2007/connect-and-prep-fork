@@ -174,6 +174,28 @@ const Profile = () => {
                     </div>
                 </div>
 
+                {/* Project Showcase / Portfolio Section */}
+                <div className="section-card projects-showcase animate-enter">
+                    <h2 className="section-title">Project Portfolio</h2>
+                    <div className="section-body">
+                        <div className="projects-grid">
+                            <div className="project-card-brutal">
+                                <h3>AI Attendance System</h3>
+                                <p className="tech">Python, OpenCV, Flutter</p>
+                                <p className="desc">Real-time face recognition for classroom attendance with automated reporting.</p>
+                                <div className="project-actions">
+                                    <button className="text-btn">Edit</button>
+                                    <button className="text-btn">View Live</button>
+                                </div>
+                            </div>
+                            <div className="project-card-brutal add-new">
+                                <div className="add-icon">+</div>
+                                <span>Add New Project</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="action-buttons">
                     <button className="save-btn" onClick={handleSave}>Save</button>
                 </div>
