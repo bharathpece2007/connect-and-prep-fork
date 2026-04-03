@@ -1,119 +1,116 @@
-# Connect & Prep 📚
+<div align="center">
+
+# 📚 Connect & Prep
+### *Empowering Students. Mastering Academics.*
 
 ![Connect & Prep Hero](./assets/hero.png)
 
-**Connect & Prep** is a state-of-the-art, student-centric academic ecosystem designed to streamline the engineering journey. Built with a high-fidelity **Dark Neo-Brutalist** aesthetic, it bridges the gap between scattered resources and effective learning.
+[![Release](https://img.shields.io/badge/Release-V1.0.0-7c3aed?style=for-the-badge&logo=github)](https://github.com/bharathkumar000/connect-and-prep)
+[![Status](https://img.shields.io/badge/Status-Stable-10b981?style=for-the-badge)](https://github.com/bharathkumar000/connect-and-prep)
+[![UI](https://img.shields.io/badge/UI-Neo--Brutalist-fbbf24?style=for-the-badge)](https://github.com/bharathkumar000/connect-and-prep)
+[![Stack](https://img.shields.io/badge/Stack-React--Vite-f472b6?style=for-the-badge)](https://github.com/bharathkumar000/connect-and-prep)
 
 ---
 
-## 🚀 Vision & Problem Statement
+</div>
 
-Engineering students often find themselves lost in a sea of fragmented data. From WhatsApp group notes to random Google Drive links, academic life is cluttered. **Connect & Prep** is the antidote—a centralized hub for mastering academics through collaboration, advanced analysis, and structured resources.
+## ✨ Overview
 
-### ❓ The Problem
-- **Fragmentation**: Resources (PYQs, Notes) spread across multiple platforms.
-- **Academic Isolation**: Lack of seamless peer-to-peer mentorship and group study formats.
-- **Tracking Fatigue**: Manual monitoring of attendance, CGPA, and deadlines.
-- **Resource Scarcity**: Difficulty in locating verified study materials and alumni networks.
-
-### ✅ The Solution
-A unified command center that integrates every aspect of student life:
-- **Centralized Repositories**: One home for all PYQs, notes, and academic papers.
-- **Collaborative Space**: Real-time whiteboarding, doubt solving, and group study zones.
-- **Performance Analytics**: AI-powered analysis of results and attendance tracking.
-- **Career & Community**: Direct connection to alumni and placement hubs.
-
----
-
-## 💎 Core Pillars
+**Connect & Prep** is a premium, state-of-the-art web application dedicated to streamlining the engineering journey. Built for the modern student, it blends traditional resource sharing with cutting-edge collaboration tools to provide a seamless, soulful journey through academics.
 
 ![Core Pillars](./assets/pillars.png)
 
-### 🏫 Academic Hub
-- **Question Paper Hub**: Deep database of previous years' questions categorized by subject.
-- **Notes Repository**: High-quality, peer-verified notes from top students.
-- **Library Integration**: Real-time status of academic books and digital library access.
 
-### 🤝 Collaborative Learning
-- **Doubt Solving Forum**: Instant peer-to-peer assistance for technical queries.
-- **Whiteboard & Study Zone**: Interactive tools for visual learning and exam marathons.
-- **Chat & Activity Feed**: Stay updated with the latest campus notifications and student discussions.
+### 🎯 The Problem We're Solving
 
-### 🛠️ Productivity Suite
-- **Attendance Tracker**: Automated monitoring of course presence with alerts.
-- **CGPA Calculator**: Visualize your academic path with detailed SGPA/CGPA breakdowns.
-- **Timetable Management**: A personalized, dynamic schedule to manage your day.
+Modern engineering students often struggle with fragmented information, isolated study habits, and a lack of deep mental connection with their subjects. **Connect & Prep** solves this by consolidating study materials, peer-to-peer tutoring, and AI-driven performance analytics into a single, unified experience.
 
-### 🎓 Mentorship & Beyond
-- **Alumni Network**: Reach out to seniors who have walked the path before.
-- **Placement Hub**: Industry-specific roadmaps and career preparation resources.
-- **Gamified Progress**: Leaderboards and challenges to keep learning engaging.
+### 🌎 Future Vision: Beyond Engineering
+
+While we've started with the engineering curriculum, the architecture of **Connect & Prep** is built to be **discipline-agnostic**. Our future roadmap includes scaling this platform to other fields like Medicine, Law, and Arts, empowering students worldwide to master their "Marga" (path) of learning.
 
 ---
 
-## 🛠️ Technical Architecture
+## 🛠️ Tech Stack
 
-```mermaid
-graph TD
-    A[User Browser] <--> B[App Frontend - React + Vite]
-    B <--> C[Auth Context - Supabase/Custom]
-    B <--> D[Dashboard Engine]
-    D --> E[Academic Services]
-    D --> F[Collaboration Suite]
-    D --> G[Productivity Modules]
-    E --> H[(Material DB)]
-    F --> I[(Chat/Forum DB)]
-    G --> J[(Analytics DB)]
+<div align="center">
+
+| | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) | ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white) | ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) | ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white) | ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white) |
+
+</div>
+
+---
+
+## 🚀 Key Features
+
+| Feature | Description |
+| :--- | :--- |
+| 🏛️ **Unified Academic Engine** | Lightning-fast, consolidated architecture for premium resource performance. |
+| 🌙 **Neo-Brutalist Interface** | A custom-crafted dark theme inspired by high-contrast digital art. |
+| ✍️ **Interactive Whiteboard** | Real-time spatial exploration of concepts and collaborative sketching. |
+| 🤖 **Prep AI** | Intelligent, curriculum-aware study companion for personalized learning. |
+| 🤝 **Peer-to-Peer Hub** | Empowering students to mentor each other and solve dots of doubt. |
+| 📊 **Analytics Command Center** | Complete system oversight with secure academic performance tracking. |
+
+---
+
+## 📂 Project Architecture
+
+```text
+connect-and-prep/
+├── src/                # Soul of the app 🧠
+│   ├── components/     # UI Building Blocks
+│   │   ├── auth/       # Pulse of identity
+│   │   ├── features/   # Core intelligence modules
+│   │   └── layout/     # Unified application engine
+│   ├── context/        # Global state consciousness
+│   ├── services/       # External world bridges (APIs)
+│   ├── App.jsx         # The main conductor
+│   └── index.css       # Design System & Soul
+├── assets/             # Project Media 🖼️
+└── public/             # Static life-support
 ```
 
-### 🧬 Tech Stack
-- **Frontend**: [React.js](https://reactjs.org/) + [Vite](https://vitejs.dev/)
-- **State Management**: React Context API
-- **Routing**: React Router v6
-- **Styling**: Vanilla CSS (Custom Neo-Brutalist Design System)
-- **Visuals**: Dynamic SVGs & Mermaid Diagrams
-
 ---
 
-## 🏁 Development Setup
+## 🏁 Getting Started
 
-Follow these steps to get your local environment running:
+### 🛠️ Installation
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/connect-and-prep.git
+git clone https://github.com/bharathkumar000/connect-and-prep.git
 
-# 2. Enter the directory
-cd connect-and-prep
-
-# 3. Install the dependencies
+# 2. Install dependencies
 npm install
 
-# 4. Launch the developer server
+# 3. Environment Setup
+# Create .env based on the provided architecture
+```
+
+### 🏃 Development
+
+```bash
+# Launch the unified development server
 npm run dev
 ```
 
 ---
 
-## 📂 Project Structure
+## 🛡️ Security & Performance
 
-```text
-src/
-├── components/
-│   ├── auth/          # Login & Authentication
-│   ├── features/      # All 30+ Core Modules (Notes, Papers, etc.)
-│   └── layout/        # Dashboard Shell & Navigation
-├── context/           # Global State Management
-├── services/          # API & Backend Interactions
-└── App.jsx            # Routing & Core Logic
-```
+*   **Secure Auth**: Industry-standard identity management for student data.
+*   **Optimized Assets**: Using Next-gen formats and lazy-loading for rapid responses.
+*   **Sanitized Inputs**: Zero-trust policy implemented across all user-generated content.
 
 ---
 
 <div align="center">
 
-**Connect & Prep** — *Empowering Students. Mastering Academics.*
+*Crafted with ❤️ for the Engineering Community.*
 
-Made with ❤️ for the Engineering Community
+[![Made with Love](https://img.shields.io/badge/Made%20in-Education-blue?style=flat-square)](https://github.com/bharathkumar000/connect-and-prep)
 
 </div>
