@@ -3,7 +3,7 @@ import {
     PieChart, Pie, Cell, Tooltip, ResponsiveContainer,
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend
 } from 'recharts';
-import { BookOpen, CheckCircle, Clock, TrendingUp, Calendar, AlertCircle } from 'lucide-react';
+import { BookOpen, CheckCircle, Clock, TrendingUp, Calendar, AlertCircle, Target } from 'lucide-react';
 import './DashboardHome.css'; // We'll create this CSS file next
 
 const DashboardHome = () => {
@@ -75,6 +75,31 @@ const DashboardHome = () => {
                         <p className="stat-subtitle">Today, 2:00 PM</p>
                     </div>
                 </div>
+
+                <div className="stat-card xp-card">
+                    <div className="stat-icon-wrapper">
+                        <TrendingUp size={24} color="var(--accent-action)" />
+                    </div>
+                    <div className="stat-content">
+                        <h3>Current XP</h3>
+                        <div className="stat-value">4,500 <span className="rank-badge">#2</span></div>
+                        <p className="stat-subtitle">Scholar Rank</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* AI Roadmap Teaser */}
+            <div className="roadmap-teaser animate-enter">
+                <div className="teaser-content">
+                    <div className="icon-box">
+                        <Target size={32} color="var(--accent-primary)" />
+                    </div>
+                    <div>
+                        <h3>AI Study Goal: Mastering Calculus</h3>
+                        <p>You have 2 topics left to revise for your upcoming 2024 Exam.</p>
+                    </div>
+                </div>
+                <button className="roadmap-btn" onClick={() => window.location.href = '/dashboard/roadmap'}>Resume Roadmap</button>
             </div>
 
             {/* Charts Section */}
