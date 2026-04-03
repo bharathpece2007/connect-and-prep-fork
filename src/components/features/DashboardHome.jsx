@@ -14,8 +14,8 @@ const DashboardHome = () => {
     ];
 
     const taskData = [
-        { name: 'Completed', value: 12, color: '#000000' }, // Black
-        { name: 'Pending', value: 5, color: '#ff9800' }   // Orange
+        { name: 'Completed', value: 12, color: '#ff9800' }, // Orange
+        { name: 'Pending', value: 5, color: '#000000' }    // Black
     ];
 
     const studyHoursData = [
