@@ -6,8 +6,49 @@ import './Attendance.css';
 const Attendance = () => {
     const { attendance } = mockBackend;
 
+    // Helper to calculate status
+    const getPrediction = (present, total) => {
+        const percentage = (present / total) * 100;
+        if (percentage < 75) {
+            const needed = Math.ceil((0.75 * total - present) / 0.25);
+            return {
+                status: 'critical',
+                message: `You need to attend ${needed} more classes to reach 75%.`,
+                classesToMiss: 0
+            };
+        } else {
+            const canMiss = Math.floor((present - 0.75 * total) / 0.75);
+            return {
+                status: 'safe',
+                message: `You are safe! You can skip up to ${canMiss} classes and still stay above 75%.`,
+                classesToMiss: canMiss
+            };
+        }
+    };
+
     return (
         <div className="attendance-container">
+            {/* Smart Predictor */}
+            <div className="predictor-section animate-enter">
+                <div className="predictor-card">
+                    <div className="predictor-header">
+                        <CheckCircle className="icon" />
+                        <h3>Smart Attendance Predictor</h3>
+                    </div>
+                    <div className="predictor-grid">
+                        {attendance.courseSummary.slice(0, 3).map((item, idx) => {
+                            const prediction = getPrediction(item.present, item.total);
+                            return (
+                                <div key={idx} className={`prediction-box ${prediction.status}`}>
+                                    <span className="course-name">{item.course.split(' - ')[1]}</span>
+                                    <span className="prediction-msg">{prediction.message}</span>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </div>
+
             {/* Filters */}
             <div className="filters-section">
                 <div className="filter-group">
