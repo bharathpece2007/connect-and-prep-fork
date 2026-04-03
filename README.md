@@ -67,6 +67,8 @@ While we've started with the engineering curriculum, the architecture of **Conne
 *   **Group Study Rooms**: Collaborative virtual environments for team learning.
 *   **Peer Tutoring**: Connect with mentors or become one to help your community.
 *   **Interactive Whiteboard**: Visual learning through shared sketching and concept mapping.
+*   **Anonymous Chat**: Speak your mind and interact with peers without identity limitations.
+*   **Anonymous Complaint Box**: A secure channel for reporting concerns and providing unbiased feedback.
 *   **Live Activity Feed**: Stay updated with the latest campus notifications and student events.
 
 ### 🛠️ Productivity & Analytics
