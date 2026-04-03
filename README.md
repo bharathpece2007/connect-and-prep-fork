@@ -3,7 +3,7 @@
 # 📚 Connect & Prep
 ### *Empowering Students. Mastering Academics.*
 
-![Connect & Prep Hero](./assets/hero.png)
+<img src="assets/hero.png" alt="Connect & Prep Hero" width="100%">
 
 [![Release](https://img.shields.io/badge/Release-V1.0.0-7c3aed?style=for-the-badge&logo=github)](https://github.com/bharathkumar000/connect-and-prep)
 [![Status](https://img.shields.io/badge/Status-Stable-10b981?style=for-the-badge)](https://github.com/bharathkumar000/connect-and-prep)
@@ -18,7 +18,7 @@
 
 **Connect & Prep** is a premium, state-of-the-art web application dedicated to streamlining the engineering journey. Built for the modern student, it blends traditional resource sharing with cutting-edge collaboration tools to provide a seamless, soulful journey through academics.
 
-![Core Pillars](./assets/pillars.png)
+<img src="assets/pillars.png" alt="Core Pillars" width="100%">
 
 
 ### 🎯 The Problem We're Solving
@@ -43,16 +43,40 @@ While we've started with the engineering curriculum, the architecture of **Conne
 
 ---
 
-## 🚀 Key Features
+## 💎 A Universe of Features
 
-| Feature | Description |
-| :--- | :--- |
-| 🏛️ **Unified Academic Engine** | Lightning-fast, consolidated architecture for premium resource performance. |
-| 🌙 **Neo-Brutalist Interface** | A custom-crafted dark theme inspired by high-contrast digital art. |
-| ✍️ **Interactive Whiteboard** | Real-time spatial exploration of concepts and collaborative sketching. |
-| 🤖 **Prep AI** | Intelligent, curriculum-aware study companion for personalized learning. |
-| 🤝 **Peer-to-Peer Hub** | Empowering students to mentor each other and solve dots of doubt. |
-| 📊 **Analytics Command Center** | Complete system oversight with secure academic performance tracking. |
+**Connect & Prep** is packed with over 30+ integrated modules designed to handle every facet of your academic career.
+
+### 🏛️ Academic Excellence
+*   **Academic Hub**: Your centralized command center for all university resources.
+*   **Question Paper Repository**: Access years of previous exam papers organized by subject.
+*   **Notes Engine**: High-fidelity, peer-verified study materials and personal note-taking.
+*   **Digital Library**: Real-time book availability and digital resource access.
+*   **Lecture Hub**: Stay aligned with your classroom teachings and recordings.
+*   **Study Zone**: A focused ecosystem for intensive learning and focus.
+
+### 🤝 Collaborative Learning
+*   **Doubt-Solving Forum**: Instant peer-to-peer assistance for complex technical queries.
+*   **Connect Chat**: Real-time group discussions and topic-based forums.
+*   **Group Study Rooms**: Collaborative virtual environments for team learning.
+*   **Peer Tutoring**: Connect with mentors or become one to help your community.
+*   **Interactive Whiteboard**: Visual learning through shared sketching and concept mapping.
+*   **Live Activity Feed**: Stay updated with the latest campus notifications and student events.
+
+### 🛠️ Productivity & Analytics
+*   **Automated Attendance**: Intelligent tracking of course presence with proactive alerts.
+*   **CGPA/SGPA Calculator**: Visual forecasting and tracking of your academic grades.
+*   **Dynamic Timetable**: A personalized, responsive schedule for your daily classes.
+*   **Academic Roadmap**: Strategic planning for your entire semester curriculum.
+*   **AI Quiz Generator**: Test your knowledge with automated, topic-specific assessments.
+*   **Semester Analytics**: Deep insights into your performance trends over time.
+
+### 🎓 Career & Gamification
+*   **Placement Hub**: Industry-specific roadmaps and career preparation resources.
+*   **Alumni Network**: Build bridges with seniors and professionals in your field.
+*   **Global Challenges**: Engage in healthy competition and skill-based trials.
+*   **Gamified Leaderboard**: Earn points, unlock badges, and track your rank.
+*   **Study Marathons**: Pomodoro-style deep-work sessions with fellow students.
 
 ---
 
