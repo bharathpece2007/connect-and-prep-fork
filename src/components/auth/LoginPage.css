@@ -61,34 +61,40 @@
     margin-bottom: 0;
 }
 
-/* Role Toggle */
-.role-toggle {
+/* Role Selector Tabs */
+.role-selector {
     display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    justify-content: center;
+}
+
+.role-tab {
     background: var(--bg-primary);
     border: 2px solid var(--border-color);
-    padding: 4px;
-    border-radius: 8px;
-    margin-bottom: 2.5rem;
-    width: 100%;
-}
-
-.toggle-btn {
-    flex: 1;
-    border: none;
-    background: transparent;
-    padding: 12px;
-    font-weight: 700;
-    font-size: 1.1rem;
+    padding: 10px 20px;
+    font-weight: 800;
+    font-size: 0.9rem;
     color: var(--text-secondary);
-    border-radius: 6px;
-    text-transform: capitalize;
-    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 4px 4px 0px var(--shadow-hard);
+    font-family: 'JetBrains Mono', monospace;
 }
 
-.toggle-btn.active {
-    background: var(--text-primary);
-    color: var(--bg-primary);
+.role-tab:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--shadow-hover);
+}
+
+.role-tab.active {
+    background: var(--accent-action);
+    color: #000;
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0px #fff;
+    border-color: #fff;
 }
 
 /* Form Styling */
