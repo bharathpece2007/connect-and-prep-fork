@@ -8,7 +8,8 @@ import {
     LogOut, Menu, X, Layout, Library, GraduationCap, Calendar,
     UserCheck, Timer, Bell, Sun, Moon, Target, Trophy, Briefcase,
     Pencil, Clock, Hash, BrainCircuit, Calculator, Activity,
-    Flame, StickyNote, CheckCircle2, Shield, Ghost
+    Flame, StickyNote, CheckCircle2, Shield, Ghost, 
+    Home, Wallet, ShieldAlert, TrendingUp, BookOpenCheck
 } from 'lucide-react';
 import './DashboardLayout.css';
 
@@ -24,8 +25,9 @@ const DashboardLayout = () => {
         navigate('/login');
     };
 
-    const navItems = [
+    const studentNav = [
         { label: 'Dashboard', icon: <Layout size={20} />, path: '/dashboard' },
+        { label: 'Homework Hub', icon: <BookOpenCheck size={20} />, path: '/dashboard/homework' },
         { label: 'Attendance List', icon: <Calendar size={20} />, path: '/dashboard/attendance' },
         { label: 'Timetable', icon: <Clock size={20} />, path: '/dashboard/timetable' },
         { label: 'Notes & PYQs', icon: <BookOpen size={20} />, path: '/dashboard/notes' },
@@ -37,6 +39,7 @@ const DashboardLayout = () => {
         { label: 'Study Zone', icon: <Users size={20} />, path: '/dashboard/studyzone' },
         { label: 'Discussion Forum', icon: <Hash size={20} />, path: '/dashboard/chat' },
         { label: 'Answer Analysis', icon: <BarChart2 size={20} />, path: '/dashboard/analysis' },
+        { label: 'Activity Feed', icon: <Activity size={20} />, path: '/dashboard/feed' },
         { label: 'CGPA Calculator', icon: <Calculator size={20} />, path: '/dashboard/cgpa' },
         { label: 'Weekly Challenges', icon: <Flame size={20} />, path: '/dashboard/challenges' },
 
@@ -46,8 +49,21 @@ const DashboardLayout = () => {
         { label: 'Placements & Interns', icon: <Briefcase size={20} />, path: '/dashboard/placements' },
         { label: 'Complaint Box', icon: <Shield size={20} />, path: '/dashboard/complaints' },
         { label: 'Anonymous Box', icon: <Ghost size={20} />, path: '/dashboard/anonymous-chat' },
-        { label: 'Activity Feed', icon: <Activity size={20} />, path: '/dashboard/feed' },
     ];
+
+    const parentNav = [
+        { label: 'Parent Dashboard', icon: <Home size={20} />, path: '/dashboard/parent-dashboard' },
+        { label: 'Child Performance', icon: <TrendingUp size={20} />, path: '/dashboard/parent-dashboard' },
+        { label: 'Attendance & Class', icon: <Calendar size={20} />, path: '/dashboard/attendance' },
+
+        { type: 'divider' },
+
+        { label: 'Finance Portal', icon: <Wallet size={20} />, path: '/dashboard/finance' },
+        { label: 'Safety Monitor', icon: <ShieldAlert size={20} />, path: '/dashboard/safety' },
+        { label: 'Teacher\'s Diary', icon: <BookOpenCheck size={20} />, path: '/dashboard/teachers-diary' },
+    ];
+
+    const navItems = user?.role === 'parent' ? parentNav : studentNav;
 
     const currentLabel = navItems
         .filter(i => i.path)
