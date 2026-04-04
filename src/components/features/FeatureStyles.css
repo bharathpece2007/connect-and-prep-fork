@@ -218,7 +218,7 @@
 
 /* Inputs */
 .filter-select,
-input,
+input:not([type="range"]),
 textarea {
     background: var(--bg-primary) !important;
     border: 2px solid var(--border-color) !important;
@@ -228,6 +228,50 @@ textarea {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 0.9rem !important;
     box-shadow: 2px 2px 0px rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Range Slider Stylings */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #444;
+    border-radius: 4px;
+    outline: none;
+    margin: 20px 0;
+    transition: all 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: var(--accent-action);
+    border: 2px solid #000;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.1s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.slider-group {
+    width: 100%;
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
 }
 
 .filter-select:focus,
