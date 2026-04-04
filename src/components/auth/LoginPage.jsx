@@ -5,7 +5,7 @@ import { BookOpen, GraduationCap, School } from 'lucide-react';
 import './LoginPage.css';
 
 const LoginPage = () => {
-    const [isStudent, setIsStudent] = useState(true);
+    const [role, setRole] = useState('student');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -19,11 +19,10 @@ const LoginPage = () => {
         setError('');
         setLoading(true);
 
-        // For demo convenience, pre-fill if empty
-        const demoEmail = email || (isStudent ? 'student@test.com' : 'teacher@test.com');
+        const demoEmail = email || `${role}@test.com`;
         const demoPass = password || 'password';
 
-        const result = await login(demoEmail, demoPass, isStudent ? 'student' : 'teacher');
+        const result = await login(demoEmail, demoPass, role);
 
         if (result.success) {
             navigate('/dashboard');
@@ -45,6 +44,19 @@ const LoginPage = () => {
 
 
 
+                <div className="role-selector">
+                    {['student', 'teacher', 'parent'].map(r => (
+                        <button
+                            key={r}
+                            type="button"
+                            className={`role-tab ${role === r ? 'active' : ''}`}
+                            onClick={() => setRole(r)}
+                        >
+                            {r.toUpperCase()}
+                        </button>
+                    ))}
+                </div>
+
                 <form onSubmit={handleLogin} className="login-form">
                     <div className="form-group">
                         <div>
@@ -54,7 +66,7 @@ const LoginPage = () => {
                         <div className="input-wrapper">
                             <input
                                 type="text"
-                                placeholder={isStudent ? "student@test.com" : "teacher@test.com"}
+                                placeholder={`${role}@test.com`}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
