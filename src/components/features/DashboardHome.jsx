@@ -81,7 +81,10 @@ const DashboardHome = () => {
                     </div>
                 </div>
 
-                <div className="stat-card xp-card">
+                <div className="stat-card xp-card" 
+                    onClick={() => navigate('/dashboard/leaderboard')}
+                    style={{ cursor: 'pointer' }}
+                >
                     <div className="stat-icon-wrapper">
                         <TrendingUp size={24} color="var(--accent-action)" />
                     </div>

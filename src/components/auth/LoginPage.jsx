@@ -5,7 +5,6 @@ import { BookOpen, GraduationCap, School } from 'lucide-react';
 import './LoginPage.css';
 
 const LoginPage = () => {
-    const [role, setRole] = useState('student');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -19,10 +18,15 @@ const LoginPage = () => {
         setError('');
         setLoading(true);
 
-        const demoEmail = email || `${role}@test.com`;
-        const demoPass = password || 'password';
+        let finalRole = 'student';
+        if (email === '11') finalRole = 'student';
+        else if (email === '22') finalRole = 'teacher';
+        else if (email === '33') finalRole = 'parent';
 
-        const result = await login(demoEmail, demoPass, role);
+        const loginEmail = email || 'student@test.com';
+        const loginPass = password || 'password';
+
+        const result = await login(loginEmail, loginPass, finalRole);
 
         if (result.success) {
             navigate('/dashboard');
@@ -42,23 +46,8 @@ const LoginPage = () => {
                     <h1>CONNECT & PREP</h1>
                 </div>
 
-
-
-                <div className="role-selector">
-                    {['student', 'teacher', 'parent'].map(r => (
-                        <button
-                            key={r}
-                            type="button"
-                            className={`role-tab ${role === r ? 'active' : ''}`}
-                            onClick={() => setRole(r)}
-                        >
-                            {r.toUpperCase()}
-                        </button>
-                    ))}
-                </div>
-
                 <form onSubmit={handleLogin} className="login-form">
-                    <div className="form-group">
+                    <div className="form-group" style={{ marginTop: '2rem' }}>
                         <div>
                             <label>EMAIL ID / USN</label>
                             <span className="separator">&raquo;</span>
@@ -66,7 +55,7 @@ const LoginPage = () => {
                         <div className="input-wrapper">
                             <input
                                 type="text"
-                                placeholder={`${role}@test.com`}
+                                placeholder="Enter USN (11, 22, 33)"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
