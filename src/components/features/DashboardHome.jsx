@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     PieChart, Pie, Cell, Tooltip, ResponsiveContainer,
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend
 } from 'recharts';
 import { BookOpen, CheckCircle, Clock, TrendingUp, Calendar, AlertCircle, Target } from 'lucide-react';
-import './DashboardHome.css'; // We'll create this CSS file next
+import './DashboardHome.css'; 
 
 const DashboardHome = () => {
+    const navigate = useNavigate();
     // Mock Data - In a real app, this would come from an API
     const attendanceData = [
         { name: 'Present', value: 85, color: '#4caf50' }, // Green
@@ -54,7 +56,10 @@ const DashboardHome = () => {
                     </div>
                 </div>
 
-                <div className="stat-card pending-card">
+                <div className="stat-card pending-card" 
+                    onClick={() => navigate('/dashboard/homework', { state: { filter: 'Pending' } })}
+                    style={{ cursor: 'pointer' }}
+                >
                     <div className="stat-icon-wrapper">
                         <AlertCircle size={24} />
                     </div>

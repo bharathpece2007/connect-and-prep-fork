@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { mockBackend } from '../../services/mockBackend';
 import { 
     Calendar, CheckCircle2, Clock, 
@@ -7,6 +8,7 @@ import {
 import './FeatureStyles.css'; // Assuming existing styles
 
 const HomeworkHub = () => {
+    const location = useLocation();
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
     const months = [
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -14,9 +16,15 @@ const HomeworkHub = () => {
     ];
     const years = [2024, 2025, 2026, 2027, 2028];
 
-    const [filter, setFilter] = useState('All');
+    const [filter, setFilter] = useState(location.state?.filter || 'All');
     const [homework, setHomework] = useState(mockBackend.homework || []);
     const [showAddTask, setShowAddTask] = useState(false);
+
+    useEffect(() => {
+        if (location.state?.filter) {
+            setFilter(location.state.filter);
+        }
+    }, [location.state]);
     const [newTask, setNewTask] = useState({
         subject: 'Mathematics',
         title: '',
