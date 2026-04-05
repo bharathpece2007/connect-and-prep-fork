@@ -3489,4 +3489,246 @@ textarea:focus {
 .p-val { font-size: 1.1rem; font-weight: 900; }
 .p-val.active { color: #10b981; }
 
-.p-footer { border-top: 1px solid #333; padding-top: 1rem; font-size: 0.85rem; color: #999; font-style: italic; }
+.p-footer { border-top: 1px solid #333; padding-top: 1rem; font-size: 0.85rem; color: #999; font-style: italic; }/* Homework Add Task Styles */
+.add-task-section {
+    margin: 1.5rem 0;
+    animation: slideInDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.add-task-btn.active {
+    background: var(--error);
+    border-color: #000;
+    color: #fff;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Enhanced Task Form Alignment */
+.add-task-section {
+    background: #1a1a1a !important; /* Darker background for the form area */
+    border: 3px solid #fff !important;
+    box-shadow: 10px 10px 0px rgba(255, 255, 255, 0.1) !important;
+    padding: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    align-items: flex-end;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.form-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #ffffff !important; /* White text as requested */
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+}
+
+.task-input,
+.add-task-section .filter-select {
+    background: #000 !important;
+    border: 2px solid #fff !important;
+    color: #fff !important;
+    padding: 12px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 600 !important;
+    width: 100% !important;
+    box-shadow: 4px 4px 0px rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.2s ease;
+}
+
+.task-input:focus,
+.add-task-section .filter-select:focus {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px #fff !important;
+    border-color: #fff !important;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.add-btn {
+    padding: 1rem 3rem !important;
+    font-size: 1rem !important;
+    background: #000 !important;
+    border: 3px solid #fff !important;
+    box-shadow: 8px 8px 0px #fff !important;
+    color: #fff !important;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background: #fff !important;
+    color: #000 !important;
+    transform: translate(-4px, -4px);
+    box-shadow: 12px 12px 0px #fff !important;
+}
+/* Final Alignment Fix for Task Form */
+.add-task-section .task-form {
+    display: block !important; /* Stack rows vertically */
+}
+
+.add-task-section .form-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; /* Wider columns */
+    gap: 2.5rem !important;
+    align-items: flex-start !important;
+}
+
+.add-task-section .form-group {
+    display: flex !important;
+    flex-direction: column !important; /* Ensure vertical stacking of label and input */
+    gap: 1rem !important;
+    width: 100% !important;
+}
+
+.add-task-section .form-label {
+    display: block !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.9rem !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    color: #ffffff !important; /* White text */
+    letter-spacing: 0.15em !important;
+    margin-bottom: 0.5rem !important;
+    text-align: left !important;
+}
+
+.add-task-section .task-input,
+.add-task-section .filter-select {
+    display: block !important;
+    background: #000 !important;
+    border: 3px solid #fff !important;
+    color: #fff !important;
+    padding: 15px !important;
+    font-size: 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.2) !important;
+}
+
+.add-task-section .form-actions {
+    margin-top: 2rem !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.add-task-section .add-btn {
+    padding: 1.2rem 4rem !important;
+    font-size: 1.1rem !important;
+    letter-spacing: 0.1em !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+}
+/* Date Selection Grid */
+.date-select-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1.5fr 1fr !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+}
+
+.date-part {
+    padding: 12px 6px !important;
+    font-size: 0.9rem !important;
+    min-width: 0 !important;
+    text-align: center !important;
+}
+/* Global Button/Pill Refinement to match Theme */
+.pill, .add-task-btn {
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    border: 2px solid var(--border-color) !important;
+    padding: 10px 24px !important;
+    font-family: "JetBrains Mono", monospace !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    box-shadow: var(--shadow-hard) !important;
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border-radius: 4px !important; /* Slight rounding but following brutalist style */
+}
+
+.pill:hover, .add-task-btn:hover {
+    background: var(--bg-secondary) !important;
+    transform: translate(-3px, -3px) !important;
+    box-shadow: var(--shadow-hover) !important;
+}
+
+.pill.active {
+    background: var(--accent-primary) !important;
+    color: var(--bg-primary) !important;
+    border-color: var(--accent-primary) !important;
+    transform: translate(-4px, -4px) !important;
+    box-shadow: var(--shadow-hover) !important;
+}
+
+.filter-pills {
+    display: flex !important;
+    gap: 16px !important;
+    flex-wrap: wrap !important;
+    margin-bottom: 2rem !important;
+}
+
+.header-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 24px !important;
+    flex-wrap: wrap !important;
+}
