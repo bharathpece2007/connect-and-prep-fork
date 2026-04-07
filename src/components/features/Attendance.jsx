@@ -1,10 +1,13 @@
 import React from 'react';
 import { mockBackend } from '../../services/mockBackend';
 import { CheckCircle, XCircle } from 'lucide-react';
+import CustomDropdown from '../layout/CustomDropdown';
 import './Attendance.css';
 
 const Attendance = () => {
     const { attendance } = mockBackend;
+    const [curriculum, setCurriculum] = React.useState('');
+    const [term, setTerm] = React.useState('');
 
     // Helper to calculate status
     const getPrediction = (present, total) => {
@@ -52,18 +55,22 @@ const Attendance = () => {
             {/* Filters */}
             <div className="filters-section">
                 <div className="filter-group">
-                    <label>Curriculum *</label>
-                    <select className="filter-select">
-                        <option>Select Curriculum</option>
-                        {attendance.curriculums?.map(c => <option key={c}>{c}</option>)}
-                    </select>
+                    <CustomDropdown 
+                        label="Curriculum *"
+                        options={attendance.curriculums || []}
+                        value={curriculum}
+                        onChange={setCurriculum}
+                        placeholder="Select Curriculum"
+                    />
                 </div>
                 <div className="filter-group">
-                    <label>Term *</label>
-                    <select className="filter-select">
-                        <option>Select Term</option>
-                        {attendance.terms?.map(t => <option key={t}>{t}</option>)}
-                    </select>
+                    <CustomDropdown 
+                        label="Term *"
+                        options={attendance.terms || []}
+                        value={term}
+                        onChange={setTerm}
+                        placeholder="Select Term"
+                    />
                 </div>
                 <div className="filter-group">
                     <label>From Month *</label>
@@ -119,8 +126,17 @@ const Attendance = () => {
             {/* Daywise List */}
             <div className="daywise-section">
                 <div className="table-controls">
-                    <div className="entries-select">
-                        Show <select style={{ background: '#000', color: '#fff', border: '1px solid #fff' }}><option>10</option></select> entries
+                    <div className="entries-select" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        Show 
+                        <div style={{ width: '80px' }}>
+                            <CustomDropdown 
+                                options={['10', '25', '50', '100']}
+                                value={'10'}
+                                onChange={() => {}}
+                                placeholder="10"
+                            />
+                        </div>
+                        entries
                     </div>
                     <div className="section-title" style={{ border: 'none', background: 'transparent' }}>Daywise course list</div>
                     <div className="search-box">
