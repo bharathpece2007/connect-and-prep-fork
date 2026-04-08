@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { mockBackend } from '../../services/mockBackend';
 import { BrainCircuit, CheckCircle2, XCircle, RotateCcw, Zap } from 'lucide-react';
+import CustomDropdown from '../layout/CustomDropdown';
 import './FeatureStyles.css';
 
 const QuizGenerator = () => {
@@ -61,12 +62,14 @@ const QuizGenerator = () => {
                 <div className="quiz-setup">
                     <h2>Configure Your Quiz</h2>
                     <div className="setup-grid">
-                        <div className="setup-option">
-                            <label>Subject</label>
-                            <select value={selectedSubject} onChange={e => setSelectedSubject(e.target.value)}>
-                                <option value="">All Subjects (Random)</option>
-                                {subjects.map(s => <option key={s} value={s}>{s}</option>)}
-                            </select>
+                        <div className="setup-option" style={{ width: '100%', maxWidth: '300px' }}>
+                            <CustomDropdown
+                                label="Subject"
+                                options={['All Subjects (Random)', ...subjects]}
+                                value={selectedSubject || 'All Subjects (Random)'}
+                                onChange={(val) => setSelectedSubject(val === 'All Subjects (Random)' ? '' : val)}
+                                placeholder="Select Subject"
+                            />
                         </div>
                         <div className="setup-option">
                             <label>Questions</label>
