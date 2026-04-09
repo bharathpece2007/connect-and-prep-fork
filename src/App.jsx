@@ -29,6 +29,7 @@ import ParentDashboard from './components/features/ParentDashboard'
 import TeachersDiary from './components/features/TeachersDiary'
 import FinancePortal from './components/features/FinancePortal'
 import SafetyMonitor from './components/features/SafetyMonitor'
+import ExamPredictor from './components/features/ExamPredictor'
 
 import './App.css'
 
@@ -81,6 +82,7 @@ function App() {
                         <Route path="teachers-diary" element={<TeachersDiary />} />
                         <Route path="finance" element={<FinancePortal />} />
                         <Route path="safety" element={<SafetyMonitor />} />
+                        <Route path="predictor" element={<ExamPredictor />} />
 
                     </Route>
                 </Routes>

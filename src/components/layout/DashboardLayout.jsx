@@ -42,6 +42,7 @@ const DashboardLayout = () => {
         { label: 'Activity Feed', icon: <Activity size={20} />, path: '/dashboard/feed' },
         { label: 'CGPA Calculator', icon: <Calculator size={20} />, path: '/dashboard/cgpa' },
         { label: 'Weekly Challenges', icon: <Flame size={20} />, path: '/dashboard/challenges' },
+        { label: 'Smart Exam Predictor', icon: <BrainCircuit size={20} />, path: '/dashboard/predictor' },
 
         { type: 'divider' },
 
@@ -61,6 +62,7 @@ const DashboardLayout = () => {
         { label: 'Finance Portal', icon: <Wallet size={20} />, path: '/dashboard/finance' },
         { label: 'Safety Monitor', icon: <ShieldAlert size={20} />, path: '/dashboard/safety' },
         { label: 'Teacher\'s Diary', icon: <BookOpenCheck size={20} />, path: '/dashboard/teachers-diary' },
+        { label: 'Smart Exam Predictor', icon: <BrainCircuit size={20} />, path: '/dashboard/predictor' },
     ];
 
     const navItems = user?.role === 'parent' ? parentNav : studentNav;
