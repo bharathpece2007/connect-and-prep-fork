@@ -30,7 +30,7 @@ const DoubtSolving = () => {
 
     return (
         <div className="feature-container">
-            <div className="doubt-layout" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(300px, 1fr)', gap: '2rem', alignItems: 'start' }}>
+            <div className="doubt-layout" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', alignItems: 'start' }}>
                 {/* Left Column: Ask Doubt Form */}
                 <div className="card" style={{ textAlign: 'center', padding: '2rem' }}>
                     {!matchedTutor ? (
@@ -91,7 +91,7 @@ const DoubtSolving = () => {
                 </div>
 
                 {/* Right Column: History Sidebar */}
-                <div style={{ borderLeft: '1px solid var(--border-color)', paddingLeft: '2rem', height: '100%' }}>
+                <div style={{ paddingLeft: '0', height: '100%' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                         <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Previous Doubts</h3>
                         <span style={{ background: '#333', padding: '2px 8px', borderRadius: '12px', fontSize: '0.8rem' }}>{doubts.length}</span>

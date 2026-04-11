@@ -371,6 +371,82 @@ const AlumniMatch = () => {
                     50% { transform: scale(1.1); }
                     100% { transform: scale(1); }
                 }
+
+                @media (max-width: 768px) {
+                    .mentor-card-stack {
+                        max-width: 100%;
+                        height: 480px;
+                    }
+
+                    .mentor-content {
+                        padding: 1rem;
+                        gap: 0.75rem;
+                    }
+
+                    .mentor-meta h3 {
+                        font-size: 1.3rem !important;
+                    }
+
+                    .mentor-bio {
+                        font-size: 0.85rem;
+                    }
+
+                    .control-btn {
+                        width: 56px;
+                        height: 56px;
+                    }
+
+                    .match-controls {
+                        gap: 1.5rem;
+                        margin-top: 1.5rem;
+                    }
+
+                    .stamp {
+                        font-size: 2rem;
+                        padding: 2px 10px;
+                        border-width: 4px;
+                    }
+
+                    .match-stamp {
+                        right: 20px;
+                    }
+
+                    .skip-stamp {
+                        left: 20px;
+                    }
+
+                    .match-header-text h2 {
+                        font-size: 1.8rem !important;
+                    }
+                }
+
+                @media (max-width: 480px) {
+                    .mentor-card-stack {
+                        height: 420px;
+                    }
+
+                    .mentor-image-container {
+                        height: 40%;
+                    }
+
+                    .mentor-meta h3 {
+                        font-size: 1.1rem !important;
+                    }
+
+                    .mentor-role-pill {
+                        font-size: 0.75rem;
+                        padding: 4px 8px;
+                    }
+
+                    .control-btn {
+                        width: 50px;
+                        height: 50px;
+                    }
+
+                    .match-header-text h2 {
+                        font-size: 1.4rem !important;
+                    }
+                }
             `}</style>
         </div>
     );
