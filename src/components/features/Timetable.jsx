@@ -241,14 +241,57 @@ const Timetable = () => {
             )}
 
             {activeTab === 'PERSONAL' && (
-                <div className="personal-notes-grid animate-enter" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
-                    {personalNotes.map(note => (
-                        <div key={note.id} className="note-card card" style={{ borderLeft: `8px solid ${note.color}` }}>
-                            <h4 style={{ marginBottom: '10px' }}>{note.title}</h4>
-                            <p style={{ fontSize: '0.9rem', color: '#ccc', whiteSpace: 'pre-line' }}>{note.content}</p>
-                            <small style={{ marginTop: '15px', display: 'block', color: '#666' }}>Updated {note.updatedAt}</small>
-                        </div>
-                    ))}
+                <div className="tt-table-wrapper animate-enter">
+                    <table className="tt-excel-table">
+                        <thead>
+                            <tr>
+                                <th className="tt-corner-header">DAY</th>
+                                {mockBackend.selfStudyTimetable.periods.map((p, i) => (
+                                    <th key={i} className="tt-period-header" style={{ fontSize: '0.7rem' }}>{p}</th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {mockBackend.selfStudyTimetable.schedule.map((dayObj) => {
+                                const slotsMap = {};
+                                dayObj.slots.forEach(s => slotsMap[s.period] = s);
+                                const consumed = new Set();
+                                dayObj.slots.forEach(s => {
+                                    if (s.span > 1) {
+                                        for (let i = 1; i < s.span; i++) consumed.add(s.period + i);
+                                    }
+                                });
+
+                                return (
+                                    <tr key={dayObj.day} className="tt-row">
+                                        <td className="tt-day-cell">
+                                            <span className="tt-day-label">{dayObj.day.toUpperCase()}</span>
+                                        </td>
+                                        {[1, 2, 3].map(p => {
+                                            if (consumed.has(p)) return null;
+                                            const slot = slotsMap[p];
+                                            if (!slot) {
+                                                return (
+                                                    <td key={p} className="tt-cell tt-empty">
+                                                        <span className="tt-empty-dash">—</span>
+                                                    </td>
+                                                );
+                                            }
+                                            const bgColor = subjectColors[slot.subject] || '#4F46E5';
+                                            return (
+                                                <td key={p} className="tt-cell tt-filled" colSpan={slot.span || 1}>
+                                                    <div className="tt-subject-cell" style={{ background: bgColor, color: '#fff' }}>
+                                                        <span className="tt-subject-name">{slot.subject}</span>
+                                                        <span className="tt-subject-type" style={{ opacity: 0.9 }}>{slot.goal}</span>
+                                                    </div>
+                                                </td>
+                                            );
+                                        })}
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
                 </div>
             )}
 

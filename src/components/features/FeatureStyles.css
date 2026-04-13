@@ -1078,53 +1078,6 @@ textarea:focus {
     cursor: crosshair;
 }
 
-/* Attendance Predictor */
-.predictor-section {
-    margin-bottom: 3rem;
-}
-
-.predictor-card {
-    background: #111;
-    border: 4px solid var(--border-color);
-    padding: 2rem;
-    box-shadow: 12px 12px 0px var(--success);
-}
-
-:root[data-theme="light"] .predictor-card {
-    background: #D1D5DB !important;
-    color: #000 !important;
-    border-color: #000 !important;
-}
-
-.predictor-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-}
-
-.prediction-box {
-    padding: 1.5rem;
-    border: 2px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.prediction-box.safe {
-    border-left: 10px solid var(--success);
-}
-
-.prediction-box.critical {
-    border-left: 10px solid var(--error);
-}
-
-.prediction-msg {
-    font-size: 0.9rem;
-    font-weight: 600;
-    line-height: 1.4;
-}
-
 /* Portfolio in Profile */
 .projects-grid {
     display: grid;
@@ -3723,7 +3676,7 @@ textarea:focus {
     display: flex !important;
     gap: 16px !important;
     flex-wrap: wrap !important;
-    margin-bottom: 2rem !important;
+    margin-bottom: 0 !important;
 }
 
 .header-actions {
