@@ -5,7 +5,6 @@ import { BookOpen, GraduationCap, School } from 'lucide-react';
 import './LoginPage.css';
 
 const LoginPage = () => {
-    const [role, setRole] = useState('student');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -19,8 +18,25 @@ const LoginPage = () => {
         setError('');
         setLoading(true);
 
-        const demoEmail = email || `${role}@test.com`;
-        const demoPass = password || 'password';
+        let role = 'student';
+        let demoEmail = email;
+        let demoPass = password || 'password';
+
+        if (email === '1') {
+            role = 'student';
+            demoEmail = 'student@test.com';
+            demoPass = 'password';
+        } else if (email === '2') {
+            role = 'teacher';
+            demoEmail = 'teacher@test.com';
+            demoPass = 'password';
+        } else if (email === '3') {
+            role = 'parent';
+            demoEmail = 'parent@test.com';
+            demoPass = 'password';
+        } else if (!email) {
+            demoEmail = 'student@test.com';
+        }
 
         const result = await login(demoEmail, demoPass, role);
 
@@ -42,21 +58,6 @@ const LoginPage = () => {
                     <h1>CONNECT & PREP</h1>
                 </div>
 
-
-
-                <div className="role-selector">
-                    {['student', 'teacher', 'parent'].map(r => (
-                        <button
-                            key={r}
-                            type="button"
-                            className={`role-tab ${role === r ? 'active' : ''}`}
-                            onClick={() => setRole(r)}
-                        >
-                            {r.toUpperCase()}
-                        </button>
-                    ))}
-                </div>
-
                 <form onSubmit={handleLogin} className="login-form">
                     <div className="form-group">
                         <div>
@@ -66,7 +67,7 @@ const LoginPage = () => {
                         <div className="input-wrapper">
                             <input
                                 type="text"
-                                placeholder={`${role}@test.com`}
+                                placeholder="Enter 1 (Student), 2 (Teacher), 3 (Parent)"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />

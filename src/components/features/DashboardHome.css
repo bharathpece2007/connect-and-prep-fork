@@ -1,399 +1,400 @@
+/* Dashboard Home - Matching Reference Design */
 .dashboard-home-container {
-    color: var(--text-primary);
-    padding: 1rem;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
-.welcome-banner {
+/* === Welcome Section (no card, just text) === */
+.dh-welcome {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-color);
+    align-items: flex-start;
+    padding: 0 0 1.5rem;
 }
 
-.welcome-banner h2 {
+.dh-greeting {
     font-size: 1.8rem;
-    margin-bottom: 0.25rem;
-    background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    margin: 0;
+    color: var(--text-primary);
+    font-style: italic;
 }
 
-.welcome-banner p {
+.dh-subtitle {
     color: var(--text-secondary);
-    font-size: 0.95rem;
+    margin: 6px 0 0;
+    font-size: 0.9rem;
 }
 
-.date-badge {
-    background: var(--bg-secondary);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
+.dh-welcome-right {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    border: 1px solid var(--border-color);
+    gap: 1rem;
+    flex-shrink: 0;
 }
 
-/* Stats Grid */
-.stats-grid {
+.dh-date-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* === Thin Divider === */
+.dh-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    margin-bottom: 2rem;
+}
+
+/* === 4 Stat Cards Row === */
+.dh-stats-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-bottom: 2.5rem;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
 }
 
-.stat-card {
-    background: var(--bg-card);
+.dh-stat-card {
+    background: #1c1c1e;
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 14px;
-    padding: 1rem 1.15rem;
+    padding: 1.5rem;
     display: flex;
     align-items: center;
-    gap: 0.9rem;
-    color: var(--text-primary);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
-    border: 2px solid var(--border-color);
-    position: relative;
-    overflow: hidden;
-    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
+    gap: 14px;
+    transition: all 0.2s;
 }
 
-/* Force light grey in light theme */
-:root[data-theme="light"] .stat-card {
-    background: #D1D5DB !important;
-    color: #000000 !important;
-    border: 2px solid #000000 !important;
+.dh-stat-card:hover {
+    background: #222224;
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
 }
 
-:root[data-theme="light"] .stat-card h3,
-:root[data-theme="light"] .stat-card p,
-:root[data-theme="light"] .stat-card .stat-value {
-    color: #000000 !important;
-}
-
-.stat-card:nth-child(1) {
-    animation-delay: 100ms;
-}
-
-.stat-card:nth-child(2) {
-    animation-delay: 200ms;
-}
-
-.stat-card:nth-child(3) {
-    animation-delay: 300ms;
-}
-
-.stat-card:nth-child(4) {
-    animation-delay: 400ms;
-}
-
-.stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
-    transform: translateX(-100%);
-    transition: 0.5s;
-}
-
-.stat-card:hover::before {
-    transform: translateX(100%);
-}
-
-.stat-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-    border-color: var(--accent-primary);
-}
-
-.stat-icon-wrapper {
-    width: 60px;
-    height: 60px;
+.dh-stat-icon {
+    width: 48px;
+    height: 48px;
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: transform 0.3s ease;
 }
 
-.stat-card:hover .stat-icon-wrapper {
-    transform: scale(1.1) rotate(5deg);
+.dh-stat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
-.streak-card .stat-icon-wrapper {
-    background: rgba(255, 152, 0, 0.1);
-    color: #ff9800;
-}
-
-.pending-card .stat-icon-wrapper {
-    background: rgba(33, 150, 243, 0.1);
-    color: #000000;
-}
-
-.event-card .stat-icon-wrapper {
-    background: rgba(76, 175, 80, 0.1);
-    color: #4caf50;
-}
-
-.stat-content h3 {
-    font-size: 0.72rem;
+.dh-stat-label {
+    font-size: 0.65rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.12em;
     color: var(--text-secondary);
-    margin-bottom: 0.2rem;
+    font-weight: 700;
 }
 
-.stat-value {
-    font-size: 1.4rem;
-    font-weight: 700;
+.dh-stat-value {
+    font-size: 1.5rem;
+    font-weight: 900;
     color: var(--text-primary);
     line-height: 1.2;
-    transition: color 0.3s ease;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
-.stat-card:hover .stat-value {
-    color: var(--accent-primary);
+.dh-stat-value.dh-event-name {
+    font-size: 1.2rem;
+}
+
+.dh-stat-sub {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    font-weight: 500;
 }
 
 .fire-emoji {
+    font-size: 1.1rem;
+}
+
+.rank-badge {
     display: inline-block;
-    animation: bounce 2s infinite;
+    background: #4ade80;
+    color: #000;
+    font-size: 0.65rem;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-left: 4px;
 }
 
-@keyframes bounce {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-5px);
-    }
+/* === AI Study Goal Banner === */
+.dh-roadmap-banner {
+    background: #1c1c1e;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
 }
 
-.stat-subtitle {
-    font-size: 0.8rem;
+.dh-roadmap-left {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.dh-roadmap-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(167, 139, 250, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dh-roadmap-banner h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.dh-roadmap-banner p {
+    margin: 4px 0 0;
+    font-size: 0.85rem;
     color: var(--text-secondary);
-    margin-top: 0.25rem;
 }
 
-/* Charts Grid */
-.charts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 1.5rem;
+.dh-roadmap-btn {
+    background: #a78bfa;
+    color: #000;
+    border: none;
+    padding: 10px 24px;
+    font-weight: 900;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
 }
 
-.chart-card {
-    background: var(--bg-card);
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    border: var(--border-width) solid var(--border-color);
+.dh-roadmap-btn:hover {
+    background: #c4b5fd;
+    transform: translateY(-1px);
+}
+
+/* === Section Title === */
+.dh-section-title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+/* === Pending Tasks === */
+.dh-tasks-card {
+    background: #1c1c1e;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 0.5rem 0;
+    margin-bottom: 2.5rem;
+}
+
+.dh-task-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: background 0.1s;
+}
+
+.dh-task-item:last-child {
+    border-bottom: none;
+}
+
+.dh-task-item:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.task-priority-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.task-priority-dot.high { background: #f87171; }
+.task-priority-dot.medium { background: #FFC229; }
+.task-priority-dot.low { background: #4ade80; }
+
+.task-info {
     display: flex;
     flex-direction: column;
-    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    gap: 2px;
 }
 
-.chart-card:nth-child(1) {
-    animation-delay: 500ms;
-}
-
-.chart-card:nth-child(2) {
-    animation-delay: 600ms;
-}
-
-.chart-card:nth-child(3) {
-    animation-delay: 700ms;
-}
-
-.chart-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-    border-color: var(--accent-secondary);
-}
-
-.wide-chart {
-    grid-column: 1 / -1;
-}
-
-.chart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.chart-header h3 {
-    font-size: 1.1rem;
+.task-title {
+    font-weight: 700;
+    font-size: 0.88rem;
     color: var(--text-primary);
-    font-weight: 600;
 }
 
-.chart-action-btn {
-    background: transparent;
-    border: 1px solid var(--border-color);
+.task-due {
+    font-size: 0.72rem;
     color: var(--text-secondary);
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
-.chart-action-btn:hover {
-    background: var(--bg-secondary);
+/* === Charts Row === */
+.dh-charts-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.dh-chart-card {
+    background: #1c1c1e;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 1.5rem;
+}
+
+.dh-chart-card h3 {
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+    font-weight: 800;
     color: var(--text-primary);
-    border-color: var(--border-color);
 }
 
 .chart-wrapper {
     position: relative;
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.bar-chart-wrapper {
-    display: block;
 }
 
 .chart-center-text {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -60%);
+    transform: translate(-50%, -55%);
     text-align: center;
-    pointer-events: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .chart-center-text .percentage {
-    display: block;
-    font-size: 1.8rem;
-    font-weight: 700;
+    font-size: 1.6rem;
+    font-weight: 900;
     color: var(--text-primary);
 }
 
 .chart-center-text .label {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: var(--text-secondary);
     text-transform: uppercase;
+    font-weight: 700;
 }
 
-@media (max-width: 768px) {
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .charts-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .stat-card {
-        padding: 0.8rem;
-    }
-
-    .stat-value {
-        font-size: 1.2rem;
-    }
-
-    .welcome-banner {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
-
-    .date-badge {
-        align-self: flex-start;
-    }
-}
-
-/* New Feature Styles */
-.xp-card {
-    border-color: var(--accent-action);
-}
-
-.xp-card .stat-value {
+/* === Parent Toggle Bar === */
+.dh-parent-toggle-bar {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    margin-top: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    transition: all 0.15s;
+    background: rgba(255, 255, 255, 0.02);
 }
 
-.rank-badge {
-    font-size: 0.9rem;
-    background: var(--accent-action);
-    color: #000;
-    padding: 2px 8px;
-    border-radius: 4px;
+.dh-parent-toggle-bar:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* === Parent Overview === */
+.parent-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.dh-parent-card {
+    background: #1c1c1e;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 2rem;
+}
+
+.dh-parent-card h3 {
+    font-size: 1.1rem;
     font-weight: 800;
+    margin: 0 0 1.5rem;
+    color: var(--text-primary);
 }
 
-.roadmap-teaser {
-    background: #111;
-    border: 3px solid var(--border-color);
-    padding: 1.5rem 2rem;
-    margin-bottom: 2.5rem;
+.parent-stat-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 8px 8px 0px var(--accent-primary);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.teaser-content {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
+.parent-label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
 }
 
-.icon-box {
-    background: rgba(167, 139, 250, 0.1);
-    padding: 1rem;
-    border-radius: 12px;
+.parent-val {
+    font-weight: 900;
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
 }
 
-.roadmap-btn {
-    background: var(--accent-primary);
-    color: #000;
-    border: none;
-    padding: 10px 24px;
+.parent-val.accent { color: #FFC229; }
+.parent-val.success { color: #4ade80; }
+
+.remark-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.fee-text {
+    color: #FFC229;
     font-weight: 800;
-    text-transform: uppercase;
-    box-shadow: 4px 4px 0px #fff;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.roadmap-btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px #fff;
-}
-
-/* Light Theme Overrides */
-:root[data-theme="light"] .roadmap-teaser {
-    color: #fff !important;
-}
-
-:root[data-theme="light"] .roadmap-teaser h3,
-:root[data-theme="light"] .roadmap-teaser p {
-    color: #fff !important;
-}
-
-:root[data-theme="light"] .roadmap-btn {
-    background: #fff !important;
-    color: #000 !important;
+    font-size: 1.1rem;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 0;
 }
