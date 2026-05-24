@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import { User, Calendar, Mail, Phone, Upload, CreditCard } from 'lucide-react';
 import CustomDropdown from '../layout/CustomDropdown';
 import './Profile.css';

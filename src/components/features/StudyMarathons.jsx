@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { mockBackend } from '../../services/mockBackend';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import { Timer, MapPin, Plus, CheckCircle, PlayCircle, Trophy } from 'lucide-react';
 import './FeatureStyles.css';
 

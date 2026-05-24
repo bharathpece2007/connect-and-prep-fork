@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { mockBackend } from '../../services/mockBackend';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import { Upload, FileText, CheckCircle, AlertTriangle, ArrowRight } from 'lucide-react';
 import CustomDropdown from '../layout/CustomDropdown';
 import './FeatureStyles.css';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import { useTheme } from '../../context/ThemeContext';
 import { mockBackend } from '../../services/mockBackend';
 import {
@@ -22,14 +22,25 @@ const DashboardLayout = () => {
         navigate('/login');
     };
 
-    const navItems = [
+    const isTeacher = user?.role === 'teacher';
+
+    const navItems = isTeacher ? [
+        { label: 'Teacher Dashboard', icon: <Layout size={20} />, path: '/dashboard' },
+        { label: 'Assignment Manager', icon: <BookOpenCheck size={20} />, path: '/dashboard/homework' },
+        { label: 'Attendance Tracker', icon: <Calendar size={20} />, path: '/dashboard/attendance' },
+        { label: 'Class Scheduler', icon: <Clock size={20} />, path: '/dashboard/timetable' },
+        { type: 'divider' },
+        { label: 'AI Lesson Builder', icon: <Bot size={20} />, path: '/dashboard/prep-box' },
+        { label: 'Doubt Resolution Center', icon: <MessageSquare size={20} />, path: '/dashboard/doubts' },
+        { label: 'Gradebook & Analytics', icon: <BarChart2 size={20} />, path: '/dashboard/report-card' },
+        { label: 'Announcement Broadcaster', icon: <Megaphone size={20} />, path: '/dashboard/notices' },
+        { label: 'Student Wellness Monitor', icon: <Heart size={20} />, path: '/dashboard/help-care' },
+    ] : [
         { label: 'Dashboard', icon: <Layout size={20} />, path: '/dashboard' },
         { label: 'Homework Hub', icon: <BookOpenCheck size={20} />, path: '/dashboard/homework' },
         { label: 'Attendance List', icon: <Calendar size={20} />, path: '/dashboard/attendance' },
         { label: 'Timetable', icon: <Clock size={20} />, path: '/dashboard/timetable' },
-
         { type: 'divider' },
-
         { label: 'Prep Box AI', icon: <Bot size={20} />, path: '/dashboard/prep-box' },
         { label: 'Doubt Solving', icon: <MessageSquare size={20} />, path: '/dashboard/doubts' },
         { label: 'Report Card', icon: <BarChart2 size={20} />, path: '/dashboard/report-card' },

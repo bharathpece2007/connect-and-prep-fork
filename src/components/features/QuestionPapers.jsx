@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, FileText, Download, Filter, Upload, Plus, Trash2 } from 'lucide-react';
 import CustomDropdown from '../layout/CustomDropdown';
 import { mockBackend } from '../../services/mockBackend';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import './FeatureStyles.css';
 
 const QuestionPapers = () => {

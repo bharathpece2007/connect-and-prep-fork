@@ -5,11 +5,14 @@ import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid
 } from 'recharts';
 import { Calendar, CheckCircle, Clock, AlertCircle, TrendingUp, Target, ToggleLeft, ToggleRight } from 'lucide-react';
+import { useAuth } from '../../context/useAuth';
 import './DashboardHome.css';
 
 const DashboardHome = () => {
     const navigate = useNavigate();
-    const [parentView, setParentView] = useState(false);
+    const { user } = useAuth();
+    const isTeacher = user?.role === 'teacher';
+    const parentView = user?.role === 'parent';
 
     const today = new Date();
     const dateString = today.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
@@ -53,10 +56,10 @@ const DashboardHome = () => {
             <div className="dh-welcome">
                 <div>
                     <h2 className="dh-greeting">
-                        {parentView ? `${childOverview.name}'s Overview` : 'Welcome back, Student!'}
+                        {isTeacher ? `Welcome back, ${user?.name || 'Teacher'}!` : parentView ? `${childOverview.name}'s Overview` : 'Welcome back, Student!'}
                     </h2>
                     <p className="dh-subtitle">
-                        {parentView ? childOverview.grade : 'Your centralized hub for academic excellence.'}
+                        {isTeacher ? 'Your centralized portal for class management and analytics.' : parentView ? childOverview.grade : 'Your centralized hub for academic excellence.'}
                     </p>
                 </div>
                 <div className="dh-welcome-right">
@@ -70,7 +73,7 @@ const DashboardHome = () => {
             {/* Thin Divider */}
             <div className="dh-divider" />
 
-            {!parentView ? (
+            {!parentView && !isTeacher ? (
                 <>
                     {/* 4 Stat Cards Row */}
                     <div className="dh-stats-row">
@@ -173,6 +176,91 @@ const DashboardHome = () => {
                                         <Bar dataKey="hours" fill="#a78bfa" radius={[4, 4, 0, 0]} barSize={32} />
                                     </BarChart>
                                 </ResponsiveContainer>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            ) : isTeacher ? (
+                <>
+                    {/* Teacher Stats Row */}
+                    <div className="dh-stats-row">
+                        <div className="dh-stat-card">
+                            <div className="dh-stat-icon" style={{ background: 'rgba(255,199,44,0.15)' }}>
+                                <TrendingUp size={22} color="#FFC72C" />
+                            </div>
+                            <div className="dh-stat-body">
+                                <span className="dh-stat-label">CLASS AVG GRADE</span>
+                                <span className="dh-stat-value">B+</span>
+                                <span className="dh-stat-sub">85% Aggregate</span>
+                            </div>
+                        </div>
+
+                        <div className="dh-stat-card" style={{ cursor: 'pointer' }} onClick={() => navigate('/dashboard/attendance')}>
+                            <div className="dh-stat-icon" style={{ background: 'rgba(74,222,128,0.15)' }}>
+                                <Calendar size={22} color="#4ade80" />
+                            </div>
+                            <div className="dh-stat-body">
+                                <span className="dh-stat-label">OVERALL ATTENDANCE</span>
+                                <span className="dh-stat-value">94%</span>
+                                <span className="dh-stat-sub">Across all batches</span>
+                            </div>
+                        </div>
+
+                        <div className="dh-stat-card" style={{ cursor: 'pointer' }} onClick={() => navigate('/dashboard/homework')}>
+                            <div className="dh-stat-icon" style={{ background: 'rgba(96,165,250,0.15)' }}>
+                                <AlertCircle size={22} color="#60a5fa" />
+                            </div>
+                            <div className="dh-stat-body">
+                                <span className="dh-stat-label">NEEDS GRADING</span>
+                                <span className="dh-stat-value">28</span>
+                                <span className="dh-stat-sub">Pending Submissions</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Action Required Ticker */}
+                    <div className="dh-roadmap-banner" style={{ cursor: 'pointer', borderLeft: '4px solid #FFC72C' }} onClick={() => navigate('/dashboard/doubts')}>
+                        <div className="dh-roadmap-left">
+                            <div className="dh-roadmap-icon">
+                                <AlertCircle size={28} color="#FFC72C" />
+                            </div>
+                            <div>
+                                <h3 style={{ color: '#FFC72C' }}>Action Required: 5 Unanswered Doubts</h3>
+                                <p>Calculus integration doubts pending from Section B.</p>
+                            </div>
+                        </div>
+                        <button className="dh-roadmap-btn" style={{ background: '#FFC72C', color: '#000', fontWeight: 'bold' }} onClick={(e) => { e.stopPropagation(); navigate('/dashboard/doubts'); }}>RESOLVE NOW</button>
+                    </div>
+
+                    {/* Today's Schedule */}
+                    <div className="dh-section-title">Today's Schedule</div>
+                    <div className="dh-tasks-card">
+                        <div className="dh-task-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                                <div className="task-priority-dot high" />
+                                <div className="task-info">
+                                    <span className="task-title">10:00 AM - Physics (Section A)</span>
+                                    <span className="task-due"><Clock size={12} /> Ongoing</span>
+                                </div>
+                            </div>
+                            <button className="dh-roadmap-btn" style={{ background: '#FFC72C', color: '#000', padding: '8px 16px', fontSize: '12px', fontWeight: 'bold' }}>Start Live Class</button>
+                        </div>
+                        <div className="dh-task-item">
+                            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                                <div className="task-priority-dot medium" />
+                                <div className="task-info">
+                                    <span className="task-title">1:30 PM - Advanced Mechanics (Section B)</span>
+                                    <span className="task-due"><Clock size={12} /> Upcoming</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="dh-task-item">
+                            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                                <div className="task-priority-dot low" />
+                                <div className="task-info">
+                                    <span className="task-title">3:00 PM - Faculty Meeting</span>
+                                    <span className="task-due"><Clock size={12} /> Upcoming</span>
+                                </div>
                             </div>
                         </div>
                     </div>
