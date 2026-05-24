@@ -44,24 +44,26 @@
 
 :root[data-theme="light"] {
   --bg-primary: #ffffff;
-  --bg-secondary: #F5F5F5;
+  --bg-secondary: #ffffff;
 
-  /* Card background becomes grey */
-  --bg-card: #D1D5DB;
+  /* Card background becomes clean white */
+  --bg-card: #ffffff;
 
-  /* Whitesmoke Background */
-  --bg-app-background: #F5F5F5;
+  /* Premium light app background */
+  --bg-app-background: #f3f4f6;
 
-  /* Ocean Blue Borders and Shadows replaced with Black */
-  --border-color: #000000;
-  --shadow-hard: 4px 4px 0px #000000;
-  --shadow-hover: 6px 6px 0px #000000;
-  --text-primary: #000000;
-  --text-secondary: #000000;
+  /* Neobrutalist stark outlines & shadows */
+  --border-color: #111827;
+  --shadow-hard: 4px 4px 0px #111827;
+  --shadow-hover: 6px 6px 0px #111827;
+  
+  /* High contrast primary text & dimmed soft grey secondary text for hierarchy */
+  --text-primary: #111827;
+  --text-secondary: #555c68;
   --text-inverse: #ffffff;
 
-  /* Black Accent */
-  --accent-primary: #000000;
+  /* Beautiful dimmed violet/indigo brand accent in light theme */
+  --accent-primary: #6366f1;
 }
 
 body {

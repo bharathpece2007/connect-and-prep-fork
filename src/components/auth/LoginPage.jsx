@@ -18,10 +18,32 @@ const LoginPage = () => {
         setError('');
         setLoading(true);
 
+<<<<<<< HEAD
         let finalRole = 'student';
         if (email === '11') finalRole = 'student';
         else if (email === '22') finalRole = 'teacher';
         else if (email === '33') finalRole = 'parent';
+=======
+        let role = 'student';
+        let demoEmail = email;
+        let demoPass = password || 'password';
+
+        if (email === '1') {
+            role = 'student';
+            demoEmail = 'student@test.com';
+            demoPass = 'password';
+        } else if (email === '2') {
+            role = 'teacher';
+            demoEmail = 'teacher@test.com';
+            demoPass = 'password';
+        } else if (email === '3') {
+            role = 'parent';
+            demoEmail = 'parent@test.com';
+            demoPass = 'password';
+        } else if (!email) {
+            demoEmail = 'student@test.com';
+        }
+>>>>>>> 41146800e0a9b29044de3f30e724c130dae74304
 
         const loginEmail = email || 'student@test.com';
         const loginPass = password || 'password';
@@ -55,7 +77,11 @@ const LoginPage = () => {
                         <div className="input-wrapper">
                             <input
                                 type="text"
+<<<<<<< HEAD
                                 placeholder="Enter USN (11, 22, 33)"
+=======
+                                placeholder="Enter 1 (Student), 2 (Teacher), 3 (Parent)"
+>>>>>>> 41146800e0a9b29044de3f30e724c130dae74304
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />

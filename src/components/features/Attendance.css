@@ -147,37 +147,111 @@
     font-size: 0.8rem;
 }
 
-/* Force light grey for tables in light theme */
+/* Force clean styling for tables in light theme */
 :root[data-theme="light"] .summary-section,
 :root[data-theme="light"] .daywise-section {
-    background: #D1D5DB !important;
-    color: #000000 !important;
-    border-color: #000000 !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    border-color: #111827 !important;
 }
 
 :root[data-theme="light"] .section-title {
-    background: rgba(0, 0, 0, 0.05) !important;
-    color: #000000 !important;
-    border-bottom: 2px solid #000000 !important;
+    background: #f9fafb !important;
+    color: #111827 !important;
+    border-bottom: 2px solid #111827 !important;
 }
 
 :root[data-theme="light"] .data-table th {
-    color: #000000 !important;
-    border-bottom: 2px solid #000000 !important;
+    color: #4b5563 !important;
+    border-bottom: 2px solid #111827 !important;
     font-weight: 800 !important;
 }
 
 :root[data-theme="light"] .data-table td {
-    color: #000000 !important;
-    border-bottom: 1px solid #000000 !important;
+    color: #111827 !important;
+    border-bottom: 1px solid #e5e7eb !important;
 }
 
 :root[data-theme="light"] .table-footer {
-    color: #000000 !important;
+    color: #4b5563 !important;
 }
 
 :root[data-theme="light"] .search-box input {
-    background: #fff !important;
-    color: #000 !important;
-    border: 1px solid #000 !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    border: 1px solid #111827 !important;
+}
+
+/* ==================== MOBILE ==================== */
+@media (max-width: 768px) {
+    .attendance-container {
+        gap: 1.25rem;
+    }
+
+    .feature-header h1 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
+    .filters-section {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .filter-group label {
+        font-size: 0.8rem;
+    }
+
+    .filter-select,
+    .filter-input {
+        padding: 10px;
+        font-size: 0.85rem;
+        min-height: 44px;
+    }
+
+    .summary-section,
+    .daywise-section {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .data-table {
+        min-width: 500px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 10px 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .table-controls {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+    }
+
+    .search-box input {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .section-title {
+        font-size: 0.8rem;
+        padding: 8px 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .data-table th,
+    .data-table td {
+        padding: 8px 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .status-badge {
+        font-size: 0.65rem;
+        padding: 3px 6px;
+    }
 }

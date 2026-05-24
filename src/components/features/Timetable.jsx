@@ -1,242 +1,226 @@
 import React, { useState, useEffect } from 'react';
-import { mockBackend } from '../../services/mockBackend';
-import { AlertTriangle, Calendar, Clock } from 'lucide-react';
-import './FeatureStyles.css';
-
-// Subject → color mapping (matching screenshot vibes)
-const subjectColors = {
-    'COM SKILLS': '#ff8c00',
-    'PHY LAB': '#00d4ff',
-    'INUNITY': '#ffe600',
-    'EC': '#4d7cff',
-    'CONS': '#a855f7',
-    'C': '#ef4444',
-    'MAT': '#22c55e',
-    'CADE-LAB': '#00d4ff',
-    'PHY': '#94a3b8',
-    'MATLAB': '#4ade80',
-    'C-LAB': '#06b6d4',
-    'CADE-T': '#84cc16',
-};
-
-// BREAK and LUNCH letters
-const breakLetters = ['B', 'R', 'E', 'A', 'K'];
-const lunchLetters = ['L', 'U', 'N', 'C', 'H'];
+import { Clock, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
+import '../features/FeatureStyles.css';
 
 const Timetable = () => {
-    const [activeTab, setActiveTab] = useState('SCHOOL');
-    const { timetable, personalNotes, todos } = mockBackend;
+    const [view, setView] = useState('daily');
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const today = new Date();
+    const todayIndex = today.getDay() - 1; // 0 = Monday
+    const [selectedDay, setSelectedDay] = useState(Math.max(0, Math.min(todayIndex, 5)));
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 60000);
+        const timer = setInterval(() => setCurrentTime(new Date()), 30000);
         return () => clearInterval(timer);
     }, []);
 
-    // Get current day
-    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const todayName = dayNames[new Date().getDay()];
+    const handleDateChange = (e) => {
+        const dateStr = e.target.value;
+        if (!dateStr) return;
+        const d = new Date(dateStr);
+        let dayIdx = d.getDay() - 1; // 0 = Monday, 5 = Saturday
+        if (dayIdx < 0) dayIdx = 0; // If Sunday, default to Monday
+        setSelectedDay(dayIdx);
+    };
 
-    // Build lookup for each day: period → slot
-    const dayLookup = {};
-    timetable.schedule.forEach(dayObj => {
-        const map = {};
-        dayObj.slots.forEach(slot => {
-            map[slot.period] = slot;
-        });
-        dayLookup[dayObj.day] = map;
-    });
+    const schedule = {
+        Monday: [
+            { period: 1, time: '8:00 - 8:45', subject: 'Mathematics', teacher: 'Mrs. Sharma', type: 'lecture', assignment: 'Ch 7 Ex 4.2' },
+            { period: 2, time: '8:45 - 9:30', subject: 'Science', teacher: 'Mr. Patel', type: 'lecture' },
+            { period: 3, time: '9:30 - 10:15', subject: 'English', teacher: 'Ms. Gupta', type: 'lecture', assignment: 'Sonnet Essay Draft' },
+            { period: 0, time: '10:15 - 10:30', subject: 'RECESS', teacher: '', type: 'recess' },
+            { period: 4, time: '10:30 - 11:15', subject: 'Social Studies', teacher: 'Mr. Khan', type: 'lecture' },
+            { period: 5, time: '11:15 - 12:00', subject: 'Hindi', teacher: 'Mrs. Devi', type: 'lecture' },
+            { period: 6, time: '12:00 - 12:45', subject: 'Computer Science', teacher: 'Mr. Reddy', type: 'lab' },
+            { period: 0, time: '12:45 - 1:30', subject: 'LUNCH BREAK', teacher: '', type: 'recess' },
+            { period: 7, time: '1:30 - 2:15', subject: 'Physical Education', teacher: 'Coach Verma', type: 'activity' },
+            { period: 8, time: '2:15 - 3:00', subject: 'Art & Craft', teacher: 'Ms. Rao', type: 'activity' },
+        ],
+        Tuesday: [
+            { period: 1, time: '8:00 - 8:45', subject: 'Science', teacher: 'Mr. Patel', type: 'lecture', assignment: 'Lab Report' },
+            { period: 2, time: '8:45 - 9:30', subject: 'Mathematics', teacher: 'Mrs. Sharma', type: 'lecture' },
+            { period: 3, time: '9:30 - 10:15', subject: 'Hindi', teacher: 'Mrs. Devi', type: 'lecture' },
+            { period: 0, time: '10:15 - 10:30', subject: 'RECESS', teacher: '', type: 'recess' },
+            { period: 4, time: '10:30 - 11:15', subject: 'English', teacher: 'Ms. Gupta', type: 'lecture' },
+            { period: 5, time: '11:15 - 12:00', subject: 'Social Studies', teacher: 'Mr. Khan', type: 'lecture' },
+            { period: 6, time: '12:00 - 12:45', subject: 'Science Lab', teacher: 'Mr. Patel', type: 'lab' },
+            { period: 0, time: '12:45 - 1:30', subject: 'LUNCH BREAK', teacher: '', type: 'recess' },
+            { period: 7, time: '1:30 - 2:15', subject: 'Computer Science', teacher: 'Mr. Reddy', type: 'lab', assignment: 'React Hook Setup' },
+            { period: 8, time: '2:15 - 3:00', subject: 'Music', teacher: 'Mrs. Nair', type: 'activity' },
+        ],
+        Wednesday: [
+            { period: 1, time: '8:00 - 8:45', subject: 'English', teacher: 'Ms. Gupta', type: 'lecture' },
+            { period: 2, time: '8:45 - 9:30', subject: 'Mathematics', teacher: 'Mrs. Sharma', type: 'lecture' },
+            { period: 3, time: '9:30 - 10:15', subject: 'Science', teacher: 'Mr. Patel', type: 'lecture' },
+            { period: 0, time: '10:15 - 10:30', subject: 'RECESS', teacher: '', type: 'recess' },
+            { period: 4, time: '10:30 - 11:15', subject: 'Hindi', teacher: 'Mrs. Devi', type: 'lecture' },
+            { period: 5, time: '11:15 - 12:00', subject: 'Computer Science', teacher: 'Mr. Reddy', type: 'lab' },
+            { period: 6, time: '12:00 - 12:45', subject: 'Social Studies', teacher: 'Mr. Khan', type: 'lecture' },
+            { period: 0, time: '12:45 - 1:30', subject: 'LUNCH BREAK', teacher: '', type: 'recess' },
+            { period: 7, time: '1:30 - 2:15', subject: 'Art & Craft', teacher: 'Ms. Rao', type: 'activity' },
+            { period: 8, time: '2:15 - 3:00', subject: 'Library', teacher: 'Mrs. Iyer', type: 'activity' },
+        ],
+        Thursday: [
+            { period: 1, time: '8:00 - 8:45', subject: 'Mathematics', teacher: 'Mrs. Sharma', type: 'lecture' },
+            { period: 2, time: '8:45 - 9:30', subject: 'English', teacher: 'Ms. Gupta', type: 'lecture' },
+            { period: 3, time: '9:30 - 10:15', subject: 'Science Lab', teacher: 'Mr. Patel', type: 'lab' },
+            { period: 0, time: '10:15 - 10:30', subject: 'RECESS', teacher: '', type: 'recess' },
+            { period: 4, time: '10:30 - 11:15', subject: 'Hindi', teacher: 'Mrs. Devi', type: 'lecture' },
+            { period: 5, time: '11:15 - 12:00', subject: 'Social Studies', teacher: 'Mr. Khan', type: 'lecture' },
+            { period: 6, time: '12:00 - 12:45', subject: 'Physical Education', teacher: 'Coach Verma', type: 'activity' },
+            { period: 0, time: '12:45 - 1:30', subject: 'LUNCH BREAK', teacher: '', type: 'recess' },
+            { period: 7, time: '1:30 - 2:15', subject: 'Mathematics', teacher: 'Mrs. Sharma', type: 'lecture' },
+            { period: 8, time: '2:15 - 3:00', subject: 'Science', teacher: 'Mr. Patel', type: 'lecture' },
+        ],
+        Friday: [
+            { period: 1, time: '8:00 - 8:45', subject: 'Science', teacher: 'Mr. Patel', type: 'lecture' },
+            { period: 2, time: '8:45 - 9:30', subject: 'English', teacher: 'Ms. Gupta', type: 'lecture' },
+            { period: 3, time: '9:30 - 10:15', subject: 'Mathematics', teacher: 'Mrs. Sharma', type: 'lecture' },
+            { period: 0, time: '10:15 - 10:30', subject: 'RECESS', teacher: '', type: 'recess' },
+            { period: 4, time: '10:30 - 11:15', subject: 'Computer Science', teacher: 'Mr. Reddy', type: 'lab' },
+            { period: 5, time: '11:15 - 12:00', subject: 'Hindi', teacher: 'Mrs. Devi', type: 'lecture' },
+            { period: 6, time: '12:00 - 12:45', subject: 'Social Studies', teacher: 'Mr. Khan', type: 'lecture' },
+            { period: 0, time: '12:45 - 1:30', subject: 'LUNCH BREAK', teacher: '', type: 'recess' },
+            { period: 7, time: '1:30 - 2:15', subject: 'Music', teacher: 'Mrs. Nair', type: 'activity' },
+            { period: 8, time: '2:15 - 3:00', subject: 'Physical Education', teacher: 'Coach Verma', type: 'activity' },
+        ],
+        Saturday: [
+            { period: 1, time: '8:00 - 8:45', subject: 'Mathematics', teacher: 'Mrs. Sharma', type: 'lecture' },
+            { period: 2, time: '8:45 - 9:30', subject: 'Science', teacher: 'Mr. Patel', type: 'lecture' },
+            { period: 3, time: '9:30 - 10:15', subject: 'English', teacher: 'Ms. Gupta', type: 'lecture' },
+            { period: 0, time: '10:15 - 10:30', subject: 'RECESS', teacher: '', type: 'recess' },
+            { period: 4, time: '10:30 - 11:15', subject: 'Extra Curricular', teacher: 'Various', type: 'activity' },
+        ],
+    };
 
-    // Determine which periods are "consumed" by a spanning slot
-    const getConsumedPeriods = (dayObj) => {
-        const consumed = new Set();
-        dayObj.slots.forEach(slot => {
-            for (let p = slot.period + 1; p < slot.period + slot.span; p++) {
-                consumed.add(p);
-            }
-        });
-        return consumed;
+    const isCurrentPeriod = (timeStr) => {
+        if (selectedDay !== todayIndex) return false;
+        const [start, end] = timeStr.split(' - ');
+        const [sh, sm] = start.split(':').map(Number);
+        const [eh, em] = end.split(':').map(Number);
+        const now = currentTime.getHours() * 60 + currentTime.getMinutes();
+        return now >= sh * 60 + sm && now < eh * 60 + em;
+    };
+
+    const typeColors = {
+        lecture: '#FFC229',
+        lab: '#a78bfa',
+        activity: '#4ade80',
+        recess: '#555',
+    };
+
+    const subjectColors = {
+        'Mathematics': '#3b82f6',
+        'Physics': '#8b5cf6',
+        'Chemistry': '#ec4899',
+        'Biology': '#10b981',
+        'Social Study': '#f97316',
+        'Hindi': '#f59e0b',
+        'Kannada': '#06b6d4',
+        'English': '#f43f5e',
+        'Extra Curricular': '#84cc16',
     };
 
     return (
-        <div className="timetable-container animate-enter" style={{ padding: '2rem' }}>
-            {/* Tab Launcher Bar */}
-            <div className="tt-tab-bar" style={{
-                display: 'flex',
-                background: '#1a1a1a',
-                border: '1px solid #444',
-                marginBottom: '2rem',
-                borderRadius: '4px',
-                overflow: 'hidden'
-            }}>
-                {['SCHOOL', 'PERSONAL', 'TODO'].map(tab => (
-                    <button
-                        key={tab}
-                        onClick={() => setActiveTab(tab)}
-                        style={{
-                            flex: 1,
-                            padding: '12px 0',
-                            border: 'none',
-                            background: activeTab === tab ? '#ff9800' : 'transparent',
-                            color: activeTab === tab ? '#000' : '#888',
-                            fontWeight: '800',
-                            cursor: 'pointer',
-                            fontSize: '0.9rem',
-                            letterSpacing: '1px',
-                            transition: 'all 0.2s',
-                            borderRight: tab !== 'TODO' ? '1px solid #444' : 'none',
-                            textTransform: 'uppercase'
-                        }}
-                    >
-                        {tab}
-                    </button>
-                ))}
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
-                <div className="current-time" style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    background: 'var(--bg-card)',
-                    padding: '8px 16px',
-                    borderRadius: '20px',
-                    border: '1px solid var(--border-color)',
-                    fontSize: '0.9rem',
-                    fontWeight: '600'
-                }}>
-                    <Clock size={16} color="var(--accent-primary)" />
-                    <span>{currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+        <div className="feature-container">
+            {/* View Toggle */}
+            <div className="tt-controls">
+                <div className="tt-view-toggle">
+                    <button className={`tt-toggle-btn ${view === 'daily' ? 'active' : ''}`} onClick={() => setView('daily')}>Daily</button>
+                    <button className={`tt-toggle-btn ${view === 'weekly' ? 'active' : ''}`} onClick={() => setView('weekly')}>Weekly</button>
                 </div>
+                {view === 'daily' && (
+                    <div className="tt-date-picker">
+                        <label>Enter Date</label>
+                        <input type="date" className="tt-date-input" onChange={handleDateChange} />
+                    </div>
+                )}
             </div>
 
-            {activeTab === 'SCHOOL' && (
-                <>
-                    {/* Excel-like Table */}
-                    <div className="tt-table-wrapper">
-                        <table className="tt-excel-table">
-                            <thead>
-                                <tr>
-                                    {/* Corner */}
-                                    <th className="tt-corner-header">DAY</th>
-                                    {/* Period 1, 2 */}
-                                    <th className="tt-period-header">1</th>
-                                    <th className="tt-period-header">2</th>
-                                    {/* Break */}
-                                    <th className="tt-separator-header"></th>
-                                    {/* Period 3, 4 */}
-                                    <th className="tt-period-header">3</th>
-                                    <th className="tt-period-header">4</th>
-                                    {/* Lunch */}
-                                    <th className="tt-separator-header"></th>
-                                    {/* Period 5, 6 */}
-                                    <th className="tt-period-header">5</th>
-                                    <th className="tt-period-header">6</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {timetable.schedule.map((dayObj, rowIdx) => {
-                                    const isToday = dayObj.day === todayName;
-                                    const consumed = getConsumedPeriods(dayObj);
-                                    const lookup = dayLookup[dayObj.day];
-
-                                    const renderPeriodCells = (periodList) => {
-                                        const cells = [];
-                                        for (const p of periodList) {
-                                            if (consumed.has(p)) continue; // skip, already merged
-                                            const slot = lookup[p];
-                                            if (!slot) {
-                                                cells.push(
-                                                    <td key={p} className="tt-cell tt-empty">
-                                                        <span className="tt-empty-dash">—</span>
-                                                    </td>
-                                                );
-                                            } else {
-                                                const bgColor = subjectColors[slot.subject] || '#666';
-                                                const textColor = ['#ffe600', '#4ade80', '#84cc16', '#22c55e', '#fbbf24'].includes(bgColor) ? '#000' : '#fff';
-                                                cells.push(
-                                                    <td
-                                                        key={p}
-                                                        className="tt-cell tt-filled"
-                                                        colSpan={slot.span}
-                                                    >
-                                                        <div
-                                                            className="tt-subject-cell"
-                                                            style={{
-                                                                background: bgColor,
-                                                                color: textColor,
-                                                            }}
-                                                        >
-                                                            <span className="tt-subject-name">{slot.subject}</span>
-                                                            <span className="tt-subject-type">{slot.type}</span>
-                                                        </div>
-                                                    </td>
-                                                );
-                                            }
-                                        }
-                                        return cells;
-                                    };
-
-                                    return (
-                                        <tr key={dayObj.day} className={`tt-row ${isToday ? 'tt-today-row' : ''}`} style={{ animationDelay: `${rowIdx * 80}ms` }}>
-                                            {/* Day label */}
-                                            <td className={`tt-day-cell ${isToday ? 'tt-today' : ''}`}>
-                                                <span className="tt-day-label">{dayObj.day.toUpperCase()}</span>
-                                                {isToday && <span className="tt-today-badge">TODAY</span>}
-                                            </td>
-
-                                            {/* Periods 1-2 */}
-                                            {renderPeriodCells([1, 2])}
-
-                                            {/* BREAK separator */}
-                                            <td className="tt-separator-cell tt-break">
-                                                <span>{breakLetters[rowIdx] || ''}</span>
-                                            </td>
-
-                                            {/* Periods 3-4 */}
-                                            {renderPeriodCells([3, 4])}
-
-                                            {/* LUNCH separator */}
-                                            <td className="tt-separator-cell tt-lunch">
-                                                <span>{lunchLetters[rowIdx] || ''}</span>
-                                            </td>
-
-                                            {/* Periods 5-6 */}
-                                            {renderPeriodCells([5, 6])}
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    {/* Legend */}
-                    <div className="tt-legend">
-                        {Object.entries(subjectColors).map(([subject, color]) => (
-                            <div key={subject} className="tt-legend-item">
-                                <span className="tt-legend-dot" style={{ background: color }}></span>
-                                <span>{subject}</span>
-                            </div>
+            {view === 'daily' ? (
+                <div className="tt-daily-layout">
+                    <div className="tt-vertical-tabs">
+                        {days.map((day, idx) => (
+                            <button
+                                key={day}
+                                className={`tt-vert-tab ${selectedDay === idx ? 'active' : ''}`}
+                                onClick={() => setSelectedDay(idx)}
+                            >
+                                <div className={`tt-vert-indicator ${selectedDay === idx ? 'active' : ''}`} />
+                                {day}
+                            </button>
                         ))}
                     </div>
-
-                    {/* Upcoming Exams */}
-                    <div className="exams-section" style={{ marginTop: '3rem' }}>
-                        <h2 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <AlertTriangle size={24} color="var(--error)" /> Upcoming Exams
-                        </h2>
-                        <div className="exams-grid">
-                            {timetable.exams.map((exam, i) => (
-                                <div key={i} className="exam-card">
-                                    <Calendar size={20} />
-                                    <div>
-                                        <h4>{exam.subject}</h4>
-                                        <p>{exam.type} — {exam.date}</p>
-                                    </div>
+                    <div className="tt-daily-grid">
+                        {schedule[days[selectedDay]]?.map((slot, i) => (
+                        <div
+                            key={i}
+                            className={`card tt-slot ${slot.type} ${isCurrentPeriod(slot.time) ? 'active-now' : ''}`}
+                        >
+                            <div className="tt-slot-left">
+                                <div className="tt-period-badge" style={{ background: typeColors[slot.type] }}>
+                                    {slot.period > 0 ? `P${slot.period}` : '—'}
                                 </div>
-                            ))}
+                                <span className="tt-time">{slot.time}</span>
+                            </div>
+                            <div className="tt-slot-center">
+                                <span className="tt-subject">{slot.subject}</span>
+                                {slot.teacher && <span className="tt-teacher">{slot.teacher}</span>}
+                                {slot.assignment && (
+                                    <span className="tt-assignment">
+                                        <FileText size={10} color="#FFC229" /> Due: {slot.assignment}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="tt-slot-right">
+                                {isCurrentPeriod(slot.time) && (
+                                    <span className="tt-active-badge">
+                                        <span className="tt-pulse" /> ACTIVE NOW
+                                    </span>
+                                )}
+                                <span className="tt-type-tag" style={{ borderColor: typeColors[slot.type], color: typeColors[slot.type] }}>
+                                    {slot.type.toUpperCase()}
+                                </span>
+                            </div>
                         </div>
+                    ))}
+                </div>
+                </div>
+            ) : (
+                <div className="tt-weekly-wrapper">
+                    <div className="tt-weekly-grid">
+                        <div className="tt-corner" />
+                        {days.map(d => (
+                            <div key={d} className="tt-week-day-header">{d.slice(0, 3).toUpperCase()}</div>
+                        ))}
+                        {Array.from({ length: 10 }, (_, rowIdx) => (
+                            <React.Fragment key={rowIdx}>
+                                <div className="tt-time-label">
+                                    {schedule.Monday[rowIdx]?.time?.split(' - ')[0] || ''}
+                                </div>
+                                {days.map(day => {
+                                    const slot = schedule[day]?.[rowIdx];
+                                    if (!slot) return <div key={day} className="tt-week-cell empty" />;
+                                    return (
+                                        <div
+                                            key={day}
+                                            className={`tt-week-cell ${slot.type}`}
+                                            style={{ 
+                                                borderLeft: `3px solid ${subjectColors[slot.subject] || typeColors[slot.type]}`,
+                                                backgroundColor: slot.type !== 'recess' ? `${subjectColors[slot.subject] || typeColors[slot.type]}20` : undefined,
+                                                borderColor: slot.type !== 'recess' ? `${subjectColors[slot.subject] || typeColors[slot.type]}40` : undefined
+                                            }}
+                                        >
+                                            <span className="tt-w-subject">{slot.subject}</span>
+                                            {slot.teacher && <span className="tt-w-teacher">{slot.teacher}</span>}
+                                        </div>
+                                    );
+                                })}
+                            </React.Fragment>
+                        ))}
                     </div>
+<<<<<<< HEAD
                 </>
             )}
 
@@ -292,39 +276,18 @@ const Timetable = () => {
                             })}
                         </tbody>
                     </table>
+=======
+>>>>>>> 41146800e0a9b29044de3f30e724c130dae74304
                 </div>
             )}
 
-            {activeTab === 'TODO' && (
-                <div className="todo-list-container animate-enter" style={{ maxWidth: '600px', margin: '0 auto' }}>
-                    {todos.map(todo => (
-                        <div key={todo.id} className="todo-item card" style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '1rem',
-                            marginBottom: '1rem',
-                            opacity: todo.done ? 0.6 : 1,
-                            textDecoration: todo.done ? 'line-through' : 'none'
-                        }}>
-                            <div style={{
-                                width: '24px',
-                                height: '24px',
-                                border: '2px solid var(--border-color)',
-                                borderRadius: '4px',
-                                background: todo.done ? 'var(--accent-primary)' : 'transparent'
-                            }}></div>
-                            <span style={{ fontSize: '1.1rem', flex: 1 }}>{todo.text}</span>
-                            <span className={`priority-tag ${todo.priority}`} style={{
-                                fontSize: '0.7rem',
-                                padding: '2px 8px',
-                                borderRadius: '4px',
-                                background: todo.priority === 'high' ? 'var(--error)' : '#555',
-                                color: todo.priority === 'high' ? '#000' : '#fff'
-                            }}>{todo.priority.toUpperCase()}</span>
-                        </div>
-                    ))}
-                </div>
-            )}
+            {/* Legend */}
+            <div className="tt-legend">
+                <span><div className="tt-legend-dot" style={{ background: '#FFC229' }} /> Lecture</span>
+                <span><div className="tt-legend-dot" style={{ background: '#a78bfa' }} /> Lab</span>
+                <span><div className="tt-legend-dot" style={{ background: '#4ade80' }} /> Activity</span>
+                <span><div className="tt-legend-dot" style={{ background: '#555' }} /> Break</span>
+            </div>
         </div>
     );
 };

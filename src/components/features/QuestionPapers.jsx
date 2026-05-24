@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, FileText, Download, Filter, Upload, Plus, Trash2 } from 'lucide-react';
+import CustomDropdown from '../layout/CustomDropdown';
 import { mockBackend } from '../../services/mockBackend';
 import { useAuth } from '../../context/AuthContext';
 import './FeatureStyles.css';
@@ -60,23 +61,31 @@ const QuestionPapers = () => {
     return (
         <div className="feature-container">
             {/* Filter Section */}
-            <div className="filters-card grid-container" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', marginBottom: '2rem', gap: '1rem' }}>
-                <select value={year} onChange={(e) => setYear(e.target.value)} className="filter-select">
-                    <option value="">Select Year</option>
-                    {mockBackend.years.map(y => <option key={y} value={y}>{y}</option>)}
-                </select>
-                <select value={college} onChange={(e) => setCollege(e.target.value)} className="filter-select">
-                    <option value="">Select College</option>
-                    {mockBackend.colleges.map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
-                <select value={subject} onChange={(e) => setSubject(e.target.value)} className="filter-select">
-                    <option value="">Select Subject</option>
-                    {mockBackend.subjects.map(s => <option key={s} value={s}>{s}</option>)}
-                </select>
-                <select value={examType} onChange={(e) => setExamType(e.target.value)} className="filter-select">
-                    <option value="">Select Exam Type</option>
-                    {mockBackend.examTypes.map(t => <option key={t} value={t}>{t}</option>)}
-                </select>
+            <div className="filters-card grid-container" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginBottom: '2rem', gap: '1.5rem' }}>
+                <CustomDropdown 
+                    options={mockBackend.years} 
+                    value={year} 
+                    onChange={setYear} 
+                    placeholder="Select Year" 
+                />
+                <CustomDropdown 
+                    options={mockBackend.colleges} 
+                    value={college} 
+                    onChange={setCollege} 
+                    placeholder="Select College" 
+                />
+                <CustomDropdown 
+                    options={mockBackend.subjects} 
+                    value={subject} 
+                    onChange={setSubject} 
+                    placeholder="Select Subject" 
+                />
+                <CustomDropdown 
+                    options={mockBackend.examTypes} 
+                    value={examType} 
+                    onChange={setExamType} 
+                    placeholder="Select Exam Type" 
+                />
             </div>
 
             {/* Results Grid */}

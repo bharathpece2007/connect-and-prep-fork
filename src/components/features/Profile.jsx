@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { User, Calendar, Mail, Phone, Upload, CreditCard } from 'lucide-react';
+import CustomDropdown from '../layout/CustomDropdown';
 import './Profile.css';
 
 const Profile = () => {
@@ -138,11 +139,12 @@ const Profile = () => {
                             <label className="row-label">Parent 1:</label>
                             <input type="text" name="parent1Name" value={formData.parent1Name} onChange={handleChange} placeholder="Enter Parent Full Name" />
                             <input type="email" name="parent1Email" value={formData.parent1Email} onChange={handleChange} placeholder="Enter Parent Email" />
-                            <select name="parent1Gender" value={formData.parent1Gender} onChange={handleChange}>
-                                <option value="">Select</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
+                            <CustomDropdown 
+                                options={['Male', 'Female']}
+                                value={formData.parent1Gender}
+                                onChange={(val) => setFormData(prev => ({ ...prev, parent1Gender: val }))}
+                                placeholder="Select"
+                            />
                             <input type="tel" name="parent1Contact" value={formData.parent1Contact} onChange={handleChange} placeholder="Enter Parent Contact No" />
                         </div>
 
@@ -151,11 +153,12 @@ const Profile = () => {
                             <label className="row-label">Parent 2:</label>
                             <input type="text" name="parent2Name" value={formData.parent2Name} onChange={handleChange} placeholder="Enter Parent Full Name" />
                             <input type="email" name="parent2Email" value={formData.parent2Email} onChange={handleChange} placeholder="Enter Parent Email" />
-                            <select name="parent2Gender" value={formData.parent2Gender} onChange={handleChange}>
-                                <option value="">Select</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
+                            <CustomDropdown 
+                                options={['Male', 'Female']}
+                                value={formData.parent2Gender}
+                                onChange={(val) => setFormData(prev => ({ ...prev, parent2Gender: val }))}
+                                placeholder="Select"
+                            />
                             <input type="tel" name="parent2Contact" value={formData.parent2Contact} onChange={handleChange} placeholder="Enter Parent Contact No" />
                         </div>
 
@@ -164,11 +167,12 @@ const Profile = () => {
                             <label className="row-label">Guardian:</label>
                             <input type="text" name="guardianName" value={formData.guardianName} onChange={handleChange} placeholder="Enter Guardian Full Name" />
                             <input type="email" name="guardianEmail" value={formData.guardianEmail} onChange={handleChange} placeholder="Enter Guardian Email" />
-                            <select name="guardianGender" value={formData.guardianGender} onChange={handleChange}>
-                                <option value="">Select</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
+                            <CustomDropdown 
+                                options={['Male', 'Female']}
+                                value={formData.guardianGender}
+                                onChange={(val) => setFormData(prev => ({ ...prev, guardianGender: val }))}
+                                placeholder="Select"
+                            />
                             <input type="tel" name="guardianContact" value={formData.guardianContact} onChange={handleChange} placeholder="Enter Guardian Contact No" />
                         </div>
                     </div>

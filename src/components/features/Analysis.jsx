@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { mockBackend } from '../../services/mockBackend';
 import { useAuth } from '../../context/AuthContext';
 import { Upload, FileText, CheckCircle, AlertTriangle, ArrowRight } from 'lucide-react';
+import CustomDropdown from '../layout/CustomDropdown';
 import './FeatureStyles.css';
 
 const Analysis = () => {
@@ -47,14 +48,12 @@ const Analysis = () => {
                     </p>
 
                     <div style={{ display: 'grid', gap: '1rem', marginBottom: '1.5rem' }}>
-                        <select
-                            className="filter-select"
+                        <CustomDropdown
+                            options={exams.map(e => ({ value: e.id, label: e.name }))}
                             value={selectedExam}
-                            onChange={(e) => setSelectedExam(e.target.value)}
-                        >
-                            <option value="">Select Exam</option>
-                            {exams.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
-                        </select>
+                            onChange={(val) => setSelectedExam(val)}
+                            placeholder="Select Exam"
+                        />
 
                         <div style={{
                             border: '2px dashed rgba(255,255,255,0.2)',

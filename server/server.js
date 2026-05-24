@@ -31,6 +31,8 @@ app.use('/api/library', require('./routes/library'));
 app.use('/api/results', require('./routes/results'));
 app.use('/api/doubts', require('./routes/doubts'));
 app.use('/api/alumni', require('./routes/alumni'));
+app.use('/api/ai', require('./routes/ai'));
+app.use('/api/chats', require('./routes/chats'));
 
 // Health check
 app.get('/api/health', (req, res) => {

@@ -1,23 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { chatsAPI } from '../../services/api';
 import './FeatureStyles.css';
 
 const AnonymousChat = () => {
-    const [messages, setMessages] = useState([
-        { id: 1, text: "Anyone here for the CS201 exam prep?", sender: "Anonymous Owl" },
-        { id: 2, text: "Yeah, focusing on the Data Structures part today.", sender: "Anonymous Wolf" },
-    ]);
+    const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
-    const handleSend = (e) => {
+    useEffect(() => {
+        const fetchMessages = async () => {
+            try {
+                const data = await chatsAPI.getMessages('anonymous');
+                // Backend fields match: { _id, message, user }
+                setMessages(data.map(m => ({
+                    id: m._id,
+                    text: m.message,
+                    sender: m.user
+                })));
+            } catch (err) {
+                console.error('Failed to load anonymous messages:', err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchMessages();
+
+        // Refresh messages every 3 seconds for simple polling real-time updates!
+        const interval = setInterval(fetchMessages, 3000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const handleSend = async (e) => {
         e.preventDefault();
         if (!newMessage.trim()) return;
-        const msg = {
-            id: Date.now(),
-            text: newMessage,
-            sender: "Anonymous " + ["Fox", "Bear", "Eagle", "Shark"][Math.floor(Math.random() * 4)]
-        };
-        setMessages([...messages, msg]);
+
+        const senderName = "Anonymous " + ["Fox", "Bear", "Eagle", "Shark", "Owl", "Wolf", "Panda", "Koala"][Math.floor(Math.random() * 8)];
+        const text = newMessage;
         setNewMessage('');
+
+        try {
+            const savedMsg = await chatsAPI.sendMessage('anonymous', text, senderName);
+            setMessages(prev => [...prev, {
+                id: savedMsg._id,
+                text: savedMsg.message,
+                sender: savedMsg.user
+            }]);
+        } catch (err) {
+            console.error('Failed to send anonymous message:', err);
+        }
     };
 
     return (
