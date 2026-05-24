@@ -38,7 +38,10 @@ const LoginPage = () => {
             demoEmail = 'student@test.com';
         }
 
-        const result = await login(demoEmail, demoPass, role);
+        const loginEmail = demoEmail || 'student@test.com';
+        const loginPass = demoPass || 'password';
+
+        const result = await login(loginEmail, loginPass, role);
 
         if (result.success) {
             navigate('/dashboard');
@@ -59,7 +62,7 @@ const LoginPage = () => {
                 </div>
 
                 <form onSubmit={handleLogin} className="login-form">
-                    <div className="form-group">
+                    <div className="form-group" style={{ marginTop: '2rem' }}>
                         <div>
                             <label>EMAIL ID / USN</label>
                             <span className="separator">&raquo;</span>

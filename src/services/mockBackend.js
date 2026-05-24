@@ -83,6 +83,18 @@ export const mockBackend = {
             { course: '1BEECT103 - Elements of Electronics', date: '21/03/2024', status: 'Absent', docStatus: 'Pending' },
             { course: '1BAIAK104 - Introduction to AI', date: '21/03/2024', status: 'Present', docStatus: 'Verified' },
             { course: '1BIMEK105 - Mechanical Engg', date: '20/03/2024', status: 'Present', docStatus: 'Verified' },
+        ],
+        daily: [
+            { date: '22/03/2024', day: 'Friday', status: 'Present', overallPercentage: 88.5 },
+            { date: '21/03/2024', day: 'Thursday', status: 'Present', overallPercentage: 88.2 },
+            { date: '20/03/2024', day: 'Wednesday', status: 'Absent', overallPercentage: 87.8 },
+            { date: '19/03/2024', day: 'Tuesday', status: 'Present', overallPercentage: 88.4 },
+            { date: '18/03/2024', day: 'Monday', status: 'Present', overallPercentage: 88.0 },
+            { date: '15/03/2024', day: 'Friday', status: 'Present', overallPercentage: 87.6 },
+            { date: '14/03/2024', day: 'Thursday', status: 'Present', overallPercentage: 87.2 },
+            { date: '13/03/2024', day: 'Wednesday', status: 'Present', overallPercentage: 86.9 },
+            { date: '12/03/2024', day: 'Tuesday', status: 'Present', overallPercentage: 86.5 },
+            { date: '11/03/2024', day: 'Monday', status: 'Present', overallPercentage: 86.2 },
         ]
     },
 
@@ -317,6 +329,20 @@ export const mockBackend = {
         { id: 4, text: 'Read Physics Unit 4', done: false, priority: 'low' },
         { id: 5, text: 'Update portfolio with new project', done: true, priority: 'medium' },
     ],
+
+    selfStudyTimetable: {
+        days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        periods: ['6-8 PM', '8-10 PM', '10-12 PM'],
+        schedule: [
+            { day: 'Monday', slots: [{ period: 1, subject: 'Mathematics', goal: 'Calculus Ex 3' }, { period: 2, subject: 'Physics', goal: 'Mechanics' }] },
+            { day: 'Tuesday', slots: [{ period: 1, subject: 'Electronics', goal: 'Logic Gates' }, { period: 3, subject: 'Programming', goal: 'React Hooks' }] },
+            { day: 'Wednesday', slots: [{ period: 2, subject: 'Mathematics', goal: 'Integration' }] },
+            { day: 'Thursday', slots: [{ period: 1, subject: 'Chemistry', goal: 'Organic UI' }, { period: 3, subject: 'Programming', goal: 'Node JS' }] },
+            { day: 'Friday', slots: [{ period: 1, subject: 'Mathematics', goal: 'Revision' }, { period: 2, subject: 'Physics', goal: 'Optics' }] },
+            { day: 'Saturday', slots: [{ period: 1, span: 3, subject: 'Full Mock Test', goal: 'Previous Year Paper' }] },
+            { day: 'Sunday', slots: [{ period: 1, span: 2, subject: 'Project Work', goal: 'Connect & Prep' }] },
+        ]
+    },
 
     // Recorded Lectures
     lectures: [

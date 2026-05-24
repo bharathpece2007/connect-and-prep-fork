@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password, type) => {
         // Simplified Login for Demo/Testing
-        if (email === '1' && password === '1' && type === 'student') {
+        if ((email === '1' || email === '11') && type === 'student') {
             const mockStudent = {
                 _id: 'mock-student-id',
                 name: 'Demo Student',
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
             return { success: true };
         }
 
-        if (email === '2' && password === '2' && type === 'teacher') {
+        if ((email === '2' || email === '22') && type === 'teacher') {
             const mockTeacher = {
                 _id: 'mock-teacher-id',
                 name: 'Demo Teacher',
@@ -62,6 +62,19 @@ export const AuthProvider = ({ children }) => {
             setUser(mockTeacher);
             localStorage.setItem('cp_user', JSON.stringify(mockTeacher));
             localStorage.setItem('cp_token', 'mock-token-teacher');
+            return { success: true };
+        }
+
+        if ((email === '3' || email === '33') && type === 'parent') {
+            const mockParent = {
+                _id: 'mock-parent-id',
+                name: 'Demo Parent',
+                email: 'parent@test.com',
+                role: 'parent'
+            };
+            setUser(mockParent);
+            localStorage.setItem('cp_user', JSON.stringify(mockParent));
+            localStorage.setItem('cp_token', 'mock-token-parent');
             return { success: true };
         }
 

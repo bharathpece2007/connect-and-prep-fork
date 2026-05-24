@@ -220,6 +220,7 @@ const Timetable = () => {
                             </React.Fragment>
                         ))}
                     </div>
+
                 </div>
             )}
 

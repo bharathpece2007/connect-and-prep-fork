@@ -25,23 +25,81 @@ const PersonalNotes = () => {
 
 
             <div className="notes-todo-layout">
-                {/* Quick Notes */}
+                {/* Self-Study Timetable (formerly Quick Notes) */}
                 <div className="notes-section">
                     <div className="section-head">
-                        <h3>Quick Notes</h3>
-                        <button className="icon-btn"><Plus size={18} /></button>
+                        <h3>Self-Study Timetable</h3>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                            <button className="icon-btn" title="Add Slot"><Plus size={18} /></button>
+                        </div>
                     </div>
-                    <div className="notes-masonry">
-                        {notes.map(note => (
-                            <div key={note.id} className="note-card" style={{ borderTop: `5px solid ${note.color}` }}>
-                                <div className="note-header">
-                                    <h4>{note.title}</h4>
-                                    {note.pinned && <Pin size={14} color={note.color} />}
-                                </div>
-                                <pre className="note-content">{note.content}</pre>
-                                <span className="note-time">{note.updatedAt}</span>
-                            </div>
-                        ))}
+                    
+                    <div className="tt-table-wrapper" style={{ marginTop: '1.5rem', border: '2px solid var(--border-color)' }}>
+                        <table className="tt-excel-table">
+                            <thead>
+                                <tr>
+                                    <th className="tt-corner-header" style={{ width: '80px', minWidth: '80px' }}>DAY</th>
+                                    {mockBackend.selfStudyTimetable.periods.map((p, i) => (
+                                        <th key={i} className="tt-period-header" style={{ fontSize: '0.65rem', padding: '10px 4px' }}>{p}</th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {mockBackend.selfStudyTimetable.schedule.map((dayObj) => {
+                                    const slotsMap = {};
+                                    dayObj.slots.forEach(s => slotsMap[s.period] = s);
+                                    const consumed = new Set();
+                                    dayObj.slots.forEach(s => {
+                                        if (s.span > 1) {
+                                            for (let i = 1; i < s.span; i++) consumed.add(s.period + i);
+                                        }
+                                    });
+
+                                    return (
+                                        <tr key={dayObj.day} className="tt-row">
+                                            <td className="tt-day-cell" style={{ width: '80px', minWidth: '80px', fontSize: '0.65rem' }}>
+                                                {dayObj.day.toUpperCase()}
+                                            </td>
+                                            {[1, 2, 3].map(p => {
+                                                if (consumed.has(p)) return null;
+                                                const slot = slotsMap[p];
+                                                if (!slot) {
+                                                    return (
+                                                        <td key={p} className="tt-cell tt-empty">
+                                                            <span className="tt-empty-dash">—</span>
+                                                        </td>
+                                                    );
+                                                }
+                                                // Using semi-random colors or consistent ones
+                                                const colors = {
+                                                    'Mathematics': '#22c55e',
+                                                    'Physics': '#94a3b8',
+                                                    'Electronics': '#4d7cff',
+                                                    'Programming': '#ef4444',
+                                                    'Chemistry': '#a855f7',
+                                                    'Full Mock Test': '#f59e0b',
+                                                    'Project Work': '#06b6d4'
+                                                };
+                                                const bgColor = colors[slot.subject] || 'var(--accent-primary)';
+                                                return (
+                                                    <td key={p} className="tt-cell tt-filled" colSpan={slot.span || 1}>
+                                                        <div className="tt-subject-cell" style={{ 
+                                                            background: bgColor, 
+                                                            color: '#fff',
+                                                            padding: '8px 4px',
+                                                            minHeight: '60px'
+                                                        }}>
+                                                            <span className="tt-subject-name" style={{ fontSize: '0.7rem' }}>{slot.subject}</span>
+                                                            <span className="tt-subject-type" style={{ fontSize: '0.55rem', opacity: 0.9 }}>{slot.goal}</span>
+                                                        </div>
+                                                    </td>
+                                                );
+                                            })}
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
