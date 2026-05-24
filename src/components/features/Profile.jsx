@@ -1,26 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { profileService, parentService, projectService } from '../../services/supabaseService';
 import { User, Calendar, Mail, Phone, Upload, CreditCard } from 'lucide-react';
 import CustomDropdown from '../layout/CustomDropdown';
 import './Profile.css';
 
 const Profile = () => {
-    const { user } = useAuth();
+    const { user, refreshUser } = useAuth();
+    const [saving, setSaving] = useState(false);
+    const [projects, setProjects] = useState([]);
 
-    // Mock state for form fields - pre-filled with user data where available
+    // Form state - pre-filled with user data
     const [formData, setFormData] = useState({
-        // Basic Details
         usn: user?.usn || '4VV25EC032',
-        firstName: user?.name?.split(' ')[0] || 'BHARATH',
-        middleName: 'KUMAR',
-        lastName: 'A',
-        collegeEmail: 'VVCE25EC0135@vvce.ac.in',
+        firstName: user?.firstName || user?.name?.split(' ')[0] || 'BHARATH',
+        middleName: user?.middleName || 'KUMAR',
+        lastName: user?.lastName || 'A',
+        collegeEmail: user?.collegeEmail || 'VVCE25EC0135@vvce.ac.in',
         personalEmail: user?.email || 'bharathece2006@gmail.com',
-        dob: '2006-04-20',
-        contact: '7996710095',
-        aadhaar: '3650 0263 1414',
+        dob: user?.dob || '2006-04-20',
+        contact: user?.contact || '7996710095',
+        aadhaar: user?.aadhaar || '',
 
-        // Parent Details
         parent1Name: 'Father Name',
         parent1Email: 'father@example.com',
         parent1Gender: 'Male',
@@ -37,6 +38,54 @@ const Profile = () => {
         guardianContact: ''
     });
 
+    // Load profile + parent details + projects from Supabase
+    useEffect(() => {
+        if (!user?._id) return;
+
+        // Load profile
+        profileService.get(user._id).then(profile => {
+            if (!profile) return;
+            setFormData(prev => ({
+                ...prev,
+                usn: profile.usn || prev.usn,
+                firstName: profile.first_name || prev.firstName,
+                middleName: profile.middle_name || prev.middleName,
+                lastName: profile.last_name || prev.lastName,
+                collegeEmail: profile.college_email || prev.collegeEmail,
+                personalEmail: profile.personal_email || profile.email || prev.personalEmail,
+                dob: profile.dob || prev.dob,
+                contact: profile.contact || prev.contact,
+                aadhaar: profile.aadhaar || prev.aadhaar,
+            }));
+        }).catch(() => {});
+
+        // Load parent details
+        parentService.get(user._id).then(parents => {
+            if (!parents || parents.length === 0) return;
+            const p1 = parents.find(p => p.parent_type === 'parent1');
+            const p2 = parents.find(p => p.parent_type === 'parent2');
+            const g = parents.find(p => p.parent_type === 'guardian');
+            setFormData(prev => ({
+                ...prev,
+                parent1Name: p1?.name || prev.parent1Name,
+                parent1Email: p1?.email || prev.parent1Email,
+                parent1Gender: p1?.gender || prev.parent1Gender,
+                parent1Contact: p1?.contact || prev.parent1Contact,
+                parent2Name: p2?.name || prev.parent2Name,
+                parent2Email: p2?.email || prev.parent2Email,
+                parent2Gender: p2?.gender || prev.parent2Gender,
+                parent2Contact: p2?.contact || prev.parent2Contact,
+                guardianName: g?.name || prev.guardianName,
+                guardianEmail: g?.email || prev.guardianEmail,
+                guardianGender: g?.gender || prev.guardianGender,
+                guardianContact: g?.contact || prev.guardianContact,
+            }));
+        }).catch(() => {});
+
+        // Load projects
+        projectService.getAll(user._id).then(setProjects).catch(() => {});
+    }, [user?._id]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -45,8 +94,40 @@ const Profile = () => {
         }));
     };
 
-    const handleSave = () => {
-        alert('Profile details saved successfully!');
+    const handleSave = async () => {
+        if (!user?._id) return;
+        setSaving(true);
+        try {
+            // Save profile
+            await profileService.update(user._id, {
+                usn: formData.usn,
+                first_name: formData.firstName,
+                middle_name: formData.middleName,
+                last_name: formData.lastName,
+                name: [formData.firstName, formData.middleName, formData.lastName].filter(Boolean).join(' '),
+                college_email: formData.collegeEmail,
+                personal_email: formData.personalEmail,
+                dob: formData.dob,
+                contact: formData.contact,
+                aadhaar: formData.aadhaar,
+            });
+
+            // Save parent details
+            await parentService.upsert(user._id, [
+                { parent_type: 'parent1', name: formData.parent1Name, email: formData.parent1Email, gender: formData.parent1Gender, contact: formData.parent1Contact },
+                { parent_type: 'parent2', name: formData.parent2Name, email: formData.parent2Email, gender: formData.parent2Gender, contact: formData.parent2Contact },
+                { parent_type: 'guardian', name: formData.guardianName, email: formData.guardianEmail, gender: formData.guardianGender, contact: formData.guardianContact },
+            ].filter(p => p.name));
+
+            // Refresh user context so name shows updated everywhere
+            if (refreshUser) await refreshUser();
+
+            alert('Profile saved successfully!');
+        } catch (err) {
+            alert('Failed to save profile: ' + err.message);
+        } finally {
+            setSaving(false);
+        }
     };
 
     return (
@@ -183,15 +264,27 @@ const Profile = () => {
                     <h2 className="section-title">Project Portfolio</h2>
                     <div className="section-body">
                         <div className="projects-grid">
-                            <div className="project-card-brutal">
-                                <h3>AI Attendance System</h3>
-                                <p className="tech">Python, OpenCV, Flutter</p>
-                                <p className="desc">Real-time face recognition for classroom attendance with automated reporting.</p>
-                                <div className="project-actions">
-                                    <button className="text-btn">Edit</button>
-                                    <button className="text-btn">View Live</button>
+                            {projects.length > 0 ? projects.map(proj => (
+                                <div key={proj.id} className="project-card-brutal">
+                                    <h3>{proj.title}</h3>
+                                    <p className="tech">{proj.tech}</p>
+                                    <p className="desc">{proj.description}</p>
+                                    <div className="project-actions">
+                                        <button className="text-btn">Edit</button>
+                                        {proj.live_url && <button className="text-btn">View Live</button>}
+                                    </div>
                                 </div>
-                            </div>
+                            )) : (
+                                <div className="project-card-brutal">
+                                    <h3>AI Attendance System</h3>
+                                    <p className="tech">Python, OpenCV, Flutter</p>
+                                    <p className="desc">Real-time face recognition for classroom attendance with automated reporting.</p>
+                                    <div className="project-actions">
+                                        <button className="text-btn">Edit</button>
+                                        <button className="text-btn">View Live</button>
+                                    </div>
+                                </div>
+                            )}
                             <div className="project-card-brutal add-new">
                                 <div className="add-icon">+</div>
                                 <span>Add New Project</span>
@@ -201,7 +294,9 @@ const Profile = () => {
                 </div>
 
                 <div className="action-buttons">
-                    <button className="save-btn" onClick={handleSave}>Save</button>
+                    <button className="save-btn" onClick={handleSave} disabled={saving}>
+                        {saving ? 'Saving...' : 'Save'}
+                    </button>
                 </div>
 
             </div>

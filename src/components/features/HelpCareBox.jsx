@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Shield, Lock, Send, CheckSquare, Square, Heart, AlertTriangle } from 'lucide-react';
 import '../features/FeatureStyles.css';
+import { useAuth } from '../../context/AuthContext';
+import { helpCareService } from '../../services/supabaseService';
 
 const HelpCareBox = () => {
+    const { user } = useAuth();
     const [message, setMessage] = useState('');
     const [anonymous, setAnonymous] = useState(true);
     const [category, setCategory] = useState('');
@@ -15,9 +18,23 @@ const HelpCareBox = () => {
         { id: 'other', label: 'Other Concern', icon: '📝', color: '#FFC229' },
     ];
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!message.trim() || !category) return;
         setSubmitted(true);
+
+        // Save to Supabase
+        try {
+            await helpCareService.submit({
+                category,
+                message,
+                anonymous,
+                user_id: anonymous ? null : (user?._id || null),
+                author_name: anonymous ? 'Anonymous' : (user?.name || 'Anonymous'),
+            });
+        } catch (err) {
+            console.warn('Help care submission failed:', err.message);
+        }
+
         setTimeout(() => {
             setSubmitted(false);
             setMessage('');

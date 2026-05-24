@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from 'recharts';
 import { TrendingUp, Award, MessageSquare } from 'lucide-react';
 import '../features/FeatureStyles.css';
+import { useAuth } from '../../context/AuthContext';
+import { reportCardService } from '../../services/supabaseService';
 
 const ReportCard = () => {
+    const { user } = useAuth();
     const [selectedTerm, setSelectedTerm] = useState('Term 2');
+    // dbReportData will hold Supabase data if available (reserved for future use with teacher-entered grades)
+    const [dbReportData, setDbReportData] = useState(null);
+
+    useEffect(() => {
+        if (!user?._id) return;
+        reportCardService.getAll(user._id)
+            .then(data => { if (data && data.length > 0) setDbReportData(data); })
+            .catch(() => {});
+    }, [user?._id]);
 
     const terms = ['Term 1', 'Term 2', 'Term 3'];
 

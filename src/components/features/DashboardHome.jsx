@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { gamificationService, homeworkService } from '../../services/supabaseService';
 import {
     PieChart, Pie, Cell, Tooltip, ResponsiveContainer,
     BarChart, Bar, XAxis, YAxis, CartesianGrid
@@ -9,7 +11,25 @@ import './DashboardHome.css';
 
 const DashboardHome = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const [parentView, setParentView] = useState(false);
+    const [gamification, setGamification] = useState({ points: 4500, streak: 12, level: 4 });
+    const [pendingCount, setPendingCount] = useState(7);
+
+    useEffect(() => {
+        if (!user?._id) return;
+        // Load gamification data
+        gamificationService.get(user._id)
+            .then(data => { if (data) setGamification(data); })
+            .catch(() => {});
+        // Load pending homework count
+        homeworkService.getAll(user._id)
+            .then(items => {
+                const pending = items.filter(h => h.status === 'assigned' || h.status === 'revision').length;
+                setPendingCount(pending);
+            })
+            .catch(() => {});
+    }, [user?._id]);
 
     const today = new Date();
     const dateString = today.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
@@ -80,7 +100,7 @@ const DashboardHome = () => {
                             </div>
                             <div className="dh-stat-body">
                                 <span className="dh-stat-label">STUDY STREAK</span>
-                                <span className="dh-stat-value">12 Days <span className="fire-emoji">🔥</span></span>
+                                <span className="dh-stat-value">{gamification.streak} Days <span className="fire-emoji">🔥</span></span>
                                 <span className="dh-stat-sub">Keep it up!</span>
                             </div>
                         </div>
@@ -91,7 +111,7 @@ const DashboardHome = () => {
                             </div>
                             <div className="dh-stat-body">
                                 <span className="dh-stat-label">TASKS PENDING</span>
-                                <span className="dh-stat-value">7</span>
+                                <span className="dh-stat-value">{pendingCount}</span>
                                 <span className="dh-stat-sub">Assignments</span>
                             </div>
                         </div>
@@ -113,7 +133,7 @@ const DashboardHome = () => {
                             </div>
                             <div className="dh-stat-body">
                                 <span className="dh-stat-label">CURRENT XP</span>
-                                <span className="dh-stat-value">4,500 <span className="rank-badge">#2</span></span>
+                                <span className="dh-stat-value">{gamification.points?.toLocaleString()} <span className="rank-badge">#2</span></span>
                                 <span className="dh-stat-sub">Scholar Rank</span>
                             </div>
                         </div>

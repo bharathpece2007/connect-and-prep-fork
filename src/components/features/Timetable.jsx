@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import '../features/FeatureStyles.css';
+import { timetableService } from '../../services/supabaseService';
 
 const Timetable = () => {
     const [view, setView] = useState('daily');
@@ -9,6 +10,20 @@ const Timetable = () => {
     const todayIndex = today.getDay() - 1; // 0 = Monday
     const [selectedDay, setSelectedDay] = useState(Math.max(0, Math.min(todayIndex, 5)));
     const [currentTime, setCurrentTime] = useState(new Date());
+    const [dbLoaded, setDbLoaded] = useState(false);
+
+    // Try to load timetable from Supabase (structure: day, period, time, subject, teacher, type, assignment)
+    // If empty, the static schedule below will be used.
+    useEffect(() => {
+        timetableService.getAll()
+            .then(data => {
+                if (data && data.length > 0) {
+                    // DB data will be used in future when admin seeds timetable table
+                    setDbLoaded(true);
+                }
+            })
+            .catch(() => {});
+    }, []);
 
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 30000);

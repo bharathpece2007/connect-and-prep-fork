@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { BookOpen, GraduationCap, School } from 'lucide-react';
 import './LoginPage.css';
@@ -94,6 +94,13 @@ const LoginPage = () => {
                     <button type="submit" className="login-btn" disabled={loading}>
                         {loading ? 'LOGGING IN...' : 'LOGIN'}
                     </button>
+
+                    <div style={{ marginTop: '1.25rem', textAlign: 'center', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+                        New here?{' '}
+                        <Link to="/register" style={{ color: 'var(--text-primary)', fontWeight: 800, letterSpacing: '1px', borderBottom: '2px solid var(--border-color)', paddingBottom: '1px', textDecoration: 'none' }}>
+                            CREATE ACCOUNT
+                        </Link>
+                    </div>
                 </form>
             </div>
         </div>

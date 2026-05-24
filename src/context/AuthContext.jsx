@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { authAPI } from '../services/api';
-import { mockBackend } from '../services/mockBackend';
+import { supabase } from '../lib/supabase';
+import { profileService } from '../services/supabaseService';
 
 const AuthContext = createContext(null);
 
@@ -8,124 +8,201 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        // Check local storage for persisted session
-        const checkAuth = async () => {
-            try {
-                const storedUser = localStorage.getItem('cp_user');
-                const token = localStorage.getItem('cp_token');
+    // Helper: build unified user object from Supabase session + profile
+    const buildUser = async (supabaseUser) => {
+        if (!supabaseUser) return null;
+        try {
+            const profile = await profileService.get(supabaseUser.id);
+            return {
+                _id: supabaseUser.id,
+                id: supabaseUser.id,
+                name: profile?.name || supabaseUser.email?.split('@')[0] || 'User',
+                email: supabaseUser.email,
+                role: profile?.role || 'student',
+                usn: profile?.usn || '',
+                // Extra profile fields
+                firstName: profile?.first_name || '',
+                middleName: profile?.middle_name || '',
+                lastName: profile?.last_name || '',
+                collegeEmail: profile?.college_email || '',
+                dob: profile?.dob || '',
+                contact: profile?.contact || '',
+                aadhaar: profile?.aadhaar || '',
+                avatarUrl: profile?.avatar_url || null,
+            };
+        } catch {
+            // Profile not found yet (e.g. right after registration)
+            return {
+                _id: supabaseUser.id,
+                id: supabaseUser.id,
+                name: supabaseUser.email?.split('@')[0] || 'User',
+                email: supabaseUser.email,
+                role: 'student',
+                usn: '',
+            };
+        }
+    };
 
-                if (storedUser && token) {
-                    // Verify token is still valid
-                    try {
-                        const userData = await authAPI.getMe();
-                        setUser(userData);
-                    } catch {
-                        // Token expired or invalid
-                        localStorage.removeItem('cp_user');
-                        localStorage.removeItem('cp_token');
-                    }
+    useEffect(() => {
+        // Check current session on mount
+        const init = async () => {
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session?.user) {
+                    const userData = await buildUser(session.user);
+                    setUser(userData);
                 }
-            } catch (error) {
-                console.error("Failed to check auth", error);
+            } catch (err) {
+                console.error('Auth init failed:', err);
             } finally {
                 setLoading(false);
             }
         };
+        init();
 
-        checkAuth();
+        // Listen to auth state changes (login, logout, token refresh)
+        const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
+            if (event === 'SIGNED_IN' && session?.user) {
+                const userData = await buildUser(session.user);
+                setUser(userData);
+            } else if (event === 'SIGNED_OUT') {
+                setUser(null);
+            } else if (event === 'TOKEN_REFRESHED' && session?.user) {
+                // Silently refresh user data
+                const userData = await buildUser(session.user);
+                setUser(userData);
+            }
+        });
+
+        return () => {
+            listener.subscription.unsubscribe();
+        };
     }, []);
 
+    /**
+     * login(email, password, type)
+     * Keeps the same signature as the old mock-based login.
+     * The "type" param is used to set the role in the profile.
+     */
     const login = async (email, password, type) => {
-        // Simplified Login for Demo/Testing
-        if (email === '1' && password === '1' && type === 'student') {
-            const mockStudent = {
-                _id: 'mock-student-id',
-                name: 'Demo Student',
-                email: 'student@test.com',
-                role: 'student',
-                usn: '4VV25EC001'
-            };
-            setUser(mockStudent);
-            localStorage.setItem('cp_user', JSON.stringify(mockStudent));
-            localStorage.setItem('cp_token', 'mock-token-student');
-            return { success: true };
-        }
+        // ── Demo shortcuts (kept for easy testing) ──
+        // email=1 → student, email=2 → teacher, email=3 → parent
+        let resolvedEmail = email;
+        let resolvedPassword = password;
 
-        if (email === '2' && password === '2' && type === 'teacher') {
-            const mockTeacher = {
-                _id: 'mock-teacher-id',
-                name: 'Demo Teacher',
-                email: 'teacher@test.com',
-                role: 'teacher'
-            };
-            setUser(mockTeacher);
-            localStorage.setItem('cp_user', JSON.stringify(mockTeacher));
-            localStorage.setItem('cp_token', 'mock-token-teacher');
-            return { success: true };
+        if (email === '1') {
+            resolvedEmail = 'student@connectprep.demo';
+            resolvedPassword = password || 'demo1234';
+        } else if (email === '2') {
+            resolvedEmail = 'teacher@connectprep.demo';
+            resolvedPassword = password || 'demo1234';
+        } else if (email === '3') {
+            resolvedEmail = 'parent@connectprep.demo';
+            resolvedPassword = password || 'demo1234';
         }
 
         try {
-            // Try Real API first
-            const data = await authAPI.login(email, password, type);
-            const userData = {
-                _id: data._id,
-                name: data.name,
-                email: data.email,
-                role: data.role,
-                usn: data.usn || '4VV25EC032'
-            };
-            setUser(userData);
-            localStorage.setItem('cp_user', JSON.stringify(userData));
-            localStorage.setItem('cp_token', data.token);
-            return { success: true };
-        } catch (error) {
-            // Fallback to Mock Backend for Demo
-            console.warn("API Login failed, using Mock Backend fallback", error.message);
-            try {
-                const mockResult = await mockBackend.login(email, password, type);
-                const userData = {
-                    _id: mockResult.user.id,
-                    name: mockResult.user.name,
-                    email: mockResult.user.email,
-                    role: mockResult.user.role,
-                    usn: '4VV25EC032'
-                };
-                setUser(userData);
-                localStorage.setItem('cp_user', JSON.stringify(userData));
-                localStorage.setItem('cp_token', mockResult.token);
-                return { success: true };
-            } catch (mockError) {
-                return { success: false, error: mockError.message };
-            }
-        }
-    };
-
-    const register = async (userData) => {
-        try {
-            const data = await authAPI.register(userData);
-            setUser({
-                _id: data._id,
-                name: data.name,
-                email: data.email,
-                role: data.role
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: resolvedEmail,
+                password: resolvedPassword,
             });
-            localStorage.setItem('cp_user', JSON.stringify(data));
-            localStorage.setItem('cp_token', data.token);
+            if (error) throw error;
+
+            const userData = await buildUser(data.user);
+            setUser(userData);
             return { success: true };
         } catch (error) {
             return { success: false, error: error.message };
         }
     };
 
-    const logout = () => {
+    /**
+     * register({ name, email, password, role, usn })
+     */
+    const register = async ({ name, email, password, role, usn }) => {
+        try {
+            // 1. Sign up in Supabase Auth
+            const { data, error } = await supabase.auth.signUp({ 
+                email, 
+                password,
+                options: {
+                    data: {
+                        name: name,
+                        role: role || 'student'
+                    }
+                }
+            });
+            if (error) throw error;
+
+            // Guard: if email confirmation is required, Supabase returns a user
+            // but no session. We still treat this as success.
+            if (!data?.user) {
+                return {
+                    success: false,
+                    error: 'Check your email and click the confirmation link to activate your account.'
+                };
+            }
+
+            // 2. Try to create profile row — but don't block login if it fails
+            //    (e.g. if the SQL migration hasn't been run yet)
+            try {
+                await profileService.upsert({
+                    id: data.user.id,
+                    name,
+                    email,
+                    role: role || 'student',
+                    usn: usn || null,
+                });
+            } catch (profileErr) {
+                // Profile save failed (table may not exist yet) — log it but
+                // don't prevent the user from being logged in.
+                console.warn('Profile upsert skipped:', profileErr.message);
+            }
+
+            // 3. Build user object from whatever we have
+            const userData = {
+                _id: data.user.id,
+                id: data.user.id,
+                name,
+                email,
+                role: role || 'student',
+                usn: usn || '',
+            };
+            setUser(userData);
+            return { success: true };
+        } catch (error) {
+            // Map common Supabase auth errors to friendly messages
+            let msg = error.message;
+            if (msg?.includes('already registered') || msg?.includes('already exists')) {
+                msg = 'An account with this email already exists. Try logging in.';
+            } else if (msg?.includes('Invalid email')) {
+                msg = 'Please enter a valid email address.';
+            } else if (msg?.includes('Password')) {
+                msg = 'Password must be at least 6 characters.';
+            }
+            return { success: false, error: msg };
+        }
+    };
+
+
+    const logout = async () => {
+        await supabase.auth.signOut();
         setUser(null);
-        localStorage.removeItem('cp_user');
-        localStorage.removeItem('cp_token');
+    };
+
+    /**
+     * refreshUser() — call after profile save to update in-memory user
+     */
+    const refreshUser = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+            const userData = await buildUser(session.user);
+            setUser(userData);
+        }
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+        <AuthContext.Provider value={{ user, login, register, logout, loading, refreshUser }}>
             {!loading && children}
         </AuthContext.Provider>
     );

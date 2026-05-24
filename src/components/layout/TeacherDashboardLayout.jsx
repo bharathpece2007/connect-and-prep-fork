@@ -4,13 +4,13 @@ import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { notificationService } from '../../services/supabaseService';
 import {
-    LogOut, Layout, GraduationCap, Calendar,
-    Clock, Bell, Sun, Moon, MessageSquare, FileText,
-    BookOpenCheck, BarChart2, Megaphone, Heart, User
+    LogOut, Layout, GraduationCap, Bell, Sun, Moon,
+    Megaphone, BookOpen, Users, ClipboardList, MessageSquare,
+    BookOpenCheck, BarChart2, FileText, UserCheck
 } from 'lucide-react';
-import './DashboardLayout.css';
+import './DashboardLayout.css'; // reuse the same CSS — same sidebar styles
 
-const DashboardLayout = () => {
+const TeacherDashboardLayout = () => {
     const { user, logout } = useAuth();
     const { theme, toggleTheme } = useTheme();
     const navigate = useNavigate();
@@ -30,18 +30,21 @@ const DashboardLayout = () => {
         navigate('/login');
     };
 
+    // Teacher-specific navigation items
     const navItems = [
-        { label: 'Dashboard', icon: <Layout size={20} />, path: '/dashboard' },
-        { label: 'Homework Hub', icon: <BookOpenCheck size={20} />, path: '/dashboard/homework' },
-        { label: 'Attendance List', icon: <Calendar size={20} />, path: '/dashboard/attendance' },
-        { label: 'Timetable', icon: <Clock size={20} />, path: '/dashboard/timetable' },
+        { label: 'Dashboard', icon: <Layout size={20} />, path: '/teacher' },
+        { label: 'My Classes', icon: <Users size={20} />, path: '/teacher/classes' },
+        { label: 'Attendance', icon: <UserCheck size={20} />, path: '/teacher/attendance' },
+        { label: 'Timetable', icon: <ClipboardList size={20} />, path: '/teacher/timetable' },
 
         { type: 'divider' },
 
-        { label: 'Doubt Solving', icon: <MessageSquare size={20} />, path: '/dashboard/doubts' },
-        { label: 'Report Card', icon: <BarChart2 size={20} />, path: '/dashboard/report-card' },
-        { label: 'Notice Board', icon: <Megaphone size={20} />, path: '/dashboard/notices' },
-        { label: 'Help & Care Box', icon: <Heart size={20} />, path: '/dashboard/help-care' },
+        { label: 'Notice Board', icon: <Megaphone size={20} />, path: '/teacher/notices' },
+        { label: 'Doubt Solving', icon: <MessageSquare size={20} />, path: '/teacher/doubts' },
+        { label: 'Study Materials', icon: <BookOpen size={20} />, path: '/teacher/materials' },
+        { label: 'Question Papers', icon: <FileText size={20} />, path: '/teacher/papers' },
+        { label: 'Results', icon: <BarChart2 size={20} />, path: '/teacher/results' },
+        { label: "Teacher's Diary", icon: <BookOpenCheck size={20} />, path: '/teacher/diary' },
     ];
 
     const currentLabel = navItems
@@ -58,7 +61,22 @@ const DashboardLayout = () => {
                 <div className="sidebar-header">
                     <div className="logo-area">
                         <GraduationCap size={32} />
-                        <span className="sidebar-text">Connect & Prep</span>
+                        <span className="sidebar-text">Connect &amp; Prep</span>
+                    </div>
+                    {/* Teacher role badge */}
+                    <div className="sidebar-text" style={{
+                        fontSize: '0.65rem',
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontWeight: 700,
+                        letterSpacing: '1.5px',
+                        color: '#FFC229',
+                        background: 'rgba(255,194,41,0.1)',
+                        border: '1px solid rgba(255,194,41,0.3)',
+                        borderRadius: '4px',
+                        padding: '2px 8px',
+                        marginTop: '-4px',
+                    }}>
+                        TEACHER PORTAL
                     </div>
                 </div>
                 <nav className="sidebar-nav">
@@ -98,6 +116,11 @@ const DashboardLayout = () => {
                                             <h4>Notifications</h4>
                                             <span>{unreadCount} unread</span>
                                         </div>
+                                        {notifications.length === 0 && (
+                                            <div style={{ padding: '1rem', color: 'var(--text-secondary)', fontSize: '0.85rem', textAlign: 'center' }}>
+                                                No notifications yet
+                                            </div>
+                                        )}
                                         {notifications.map(n => (
                                             <div key={n.id} className={`notif-item ${n.read ? 'read' : 'unread'}`}>
                                                 <div className="notif-icon"><Bell size={16} /></div>
@@ -129,24 +152,23 @@ const DashboardLayout = () => {
 
 const ProfileMenu = ({ user, logout }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const navigate = useNavigate();
 
     return (
         <div className="profile-menu-wrapper">
             <button className="profile-btn" onClick={() => setIsOpen(!isOpen)}>
-                <div className="avatar-circle">
-                    {user?.name?.charAt(0) || 'U'}
+                <div className="avatar-circle" style={{ background: 'rgba(255,194,41,0.2)', color: '#FFC229', border: '2px solid #FFC229' }}>
+                    {user?.name?.charAt(0) || 'T'}
                 </div>
                 <div className="user-text">
-                    <span className="name">{user?.name || 'User'}</span>
-                    <span className="role">{user?.role || 'Student'}</span>
+                    <span className="name">{user?.name || 'Teacher'}</span>
+                    <span className="role" style={{ color: '#FFC229' }}>Teacher</span>
                 </div>
             </button>
             {isOpen && (
                 <div className="dropdown-menu">
                     <div className="dropdown-header">
                         <p className="d-name">Name: {user?.name}</p>
-                        <p className="d-usn">Role: {user?.role}</p>
+                        <p className="d-usn">Role: Teacher</p>
                     </div>
                     <div className="dropdown-item logout" onClick={logout}>
                         <LogOut size={16} /> Logout
@@ -158,4 +180,4 @@ const ProfileMenu = ({ user, logout }) => {
     );
 };
 
-export default DashboardLayout;
+export default TeacherDashboardLayout;

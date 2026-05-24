@@ -1,0 +1,352 @@
+/* ── Teacher Dashboard Home CSS ────────────────
+   Reuses FeatureStyles.css card/grid patterns.
+   Same dark neo-brutalist theme.
+   ────────────────────────────────────────────── */
+
+/* Greeting Banner */
+.td-greeting-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border-top: 3px solid #FFC229;
+}
+
+.td-greeting-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.td-date {
+    font-size: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.td-greeting-text {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.td-name-highlight {
+    color: #FFC229;
+}
+
+.td-greeting-sub {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.td-greeting-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #FFC229;
+    opacity: 0.8;
+}
+
+/* ── Stats Grid ──────────────────────────────── */
+.td-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.td-stat-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+}
+
+.td-stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.td-stat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.td-stat-label {
+    font-size: 0.6rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+}
+
+.td-stat-value {
+    font-size: 1.6rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.td-stat-sub {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+
+/* ── Main 2-col Grid ─────────────────────────── */
+.td-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ── Section Header ──────────────────────────── */
+.td-section {
+    padding: 1.5rem;
+}
+
+.td-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
+.td-section-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.td-section-badge {
+    font-size: 0.65rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+/* ── Class List ──────────────────────────────── */
+.td-class-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.td-class-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    gap: 1rem;
+}
+
+.td-class-left {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.td-class-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: #FFC229;
+    background: rgba(255, 194, 41, 0.12);
+    border: 1px solid rgba(255, 194, 41, 0.4);
+    border-radius: 6px;
+    padding: 4px 10px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.td-class-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.td-class-subject {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.td-class-meta {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+
+.td-class-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.td-class-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.td-quick-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+}
+
+.td-quick-btn:hover {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+}
+
+/* ── Quick Actions Grid ──────────────────────── */
+.td-action-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.85rem;
+}
+
+.td-action-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1.1rem 0.75rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    position: relative;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.td-action-card:hover {
+    border-color: #FFC229;
+    color: var(--text-primary);
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px var(--border-color);
+}
+
+.td-action-badge {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: #f87171;
+    color: #000;
+    font-size: 0.6rem;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 20px;
+    min-width: 18px;
+    text-align: center;
+}
+
+/* ── Activity Card ───────────────────────────── */
+.td-activity-card {
+    padding: 1.5rem;
+    margin-bottom: 0;
+}
+
+.td-activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.td-activity-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.td-activity-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.td-activity-text {
+    flex: 1;
+    font-size: 0.88rem;
+    color: var(--text-primary);
+}
+
+.td-activity-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 1100px) {
+    .td-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .td-main-grid {
+        grid-template-columns: 1fr;
+    }
+    .td-stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .td-action-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

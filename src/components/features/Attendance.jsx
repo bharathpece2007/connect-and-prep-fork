@@ -1,27 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, Bell, CheckCircle, XCircle } from 'lucide-react';
 import '../features/FeatureStyles.css';
+import { useAuth } from '../../context/AuthContext';
+import { attendanceService } from '../../services/supabaseService';
 
 const Attendance = () => {
+    const { user } = useAuth();
     const today = new Date();
     const [currentMonth, setCurrentMonth] = useState(today.getMonth());
     const [currentYear] = useState(today.getFullYear());
+    const [attendanceRecord, setAttendanceRecord] = useState({});
+    const [loading, setLoading] = useState(true);
 
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
 
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
 
-    // Mock attendance data (day: 'present' | 'absent' | null)
-    const attendanceRecord = {};
-    for (let i = 1; i <= daysInMonth; i++) {
-        const dayOfWeek = new Date(currentYear, currentMonth, i).getDay();
-        if (dayOfWeek === 0) {
-            attendanceRecord[i] = 'holiday'; // Sunday
-        } else if (i <= today.getDate() || currentMonth < today.getMonth()) {
-            attendanceRecord[i] = Math.random() > 0.12 ? 'present' : 'absent';
+    useEffect(() => {
+        if (!user?._id) {
+            // Generate random fallback when no user
+            generateFallback();
+            setLoading(false);
+            return;
         }
-    }
+
+        setLoading(true);
+        attendanceService.getMonth(user._id, currentYear, currentMonth + 1)
+            .then(records => {
+                if (records && records.length > 0) {
+                    // Build day → status map from DB records
+                    const record = {};
+                    records.forEach(r => {
+                        const day = new Date(r.date).getDate();
+                        record[day] = r.status; // 'present' | 'absent' | 'holiday'
+                    });
+                    setAttendanceRecord(record);
+                } else {
+                    generateFallback();
+                }
+            })
+            .catch(() => generateFallback())
+            .finally(() => setLoading(false));
+    }, [user?._id, currentMonth]);
+
+    const generateFallback = () => {
+        const record = {};
+        const dm = new Date(currentYear, currentMonth + 1, 0).getDate();
+        for (let i = 1; i <= dm; i++) {
+            const dayOfWeek = new Date(currentYear, currentMonth, i).getDay();
+            if (dayOfWeek === 0) {
+                record[i] = 'holiday'; // Sunday
+            } else if (i <= today.getDate() || currentMonth < today.getMonth()) {
+                record[i] = Math.random() > 0.12 ? 'present' : 'absent';
+            }
+        }
+        setAttendanceRecord(record);
+    };
 
     const totalDays = Object.values(attendanceRecord).filter(v => v === 'present' || v === 'absent').length;
     const presentDays = Object.values(attendanceRecord).filter(v => v === 'present').length;
@@ -96,8 +132,6 @@ const Attendance = () => {
                         <span><div className="att-dot holiday" /> Holiday</span>
                     </div>
                 </div>
-
-
             </div>
         </div>
     );
