@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Upload, Clock, CheckCircle, AlertTriangle, FileText, Plus } from 'lucide-react';
+import { useAuth } from '../../context/useAuth';
 import '../features/FeatureStyles.css';
 
 const HomeworkHub = () => {
@@ -56,7 +57,7 @@ const HomeworkHub = () => {
         return diffDays >= -1 && diffDays <= 2; 
     };
 
-    const { user } = require('../../context/useAuth').useAuth();
+    const { user } = useAuth();
     const isTeacher = user?.role === 'teacher';
 
     const [teacherTab, setTeacherTab] = useState('needs-grading');

@@ -1,4 +1,7 @@
-const API_BASE_URL = 'http://localhost:5001/api';
+const API_BASE_URL = typeof window !== 'undefined' && window.location.origin.includes('localhost')
+    ? 'http://localhost:5001/api'
+    : '/api';
+
 
 // Helper to get auth headers
 const getAuthHeaders = () => {
@@ -178,13 +181,14 @@ export const alumniAPI = {
     }),
 };
 
-// AI Chat API (Talks directly to the Python FastAPI backend on port 5002)
+// AI Chat API (Talks directly to the Express backend on port 5001)
 export const aiAPI = {
-    chat: (message, history) => aiApiRequest('/ai/chat', {
+    chat: (message, history) => apiRequest('/ai/chat', {
         method: 'POST',
         body: JSON.stringify({ message, history }),
     }),
 };
+
 
 // Chats API
 export const chatsAPI = {
